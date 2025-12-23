@@ -29,6 +29,7 @@ export default {
 </script>
 <style >
 @import "./common/font/font.css";
+@import "./common/css/global.css";
 </style>
 
 
