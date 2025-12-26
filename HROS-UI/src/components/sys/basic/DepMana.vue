@@ -24,8 +24,8 @@
     </div>
     <div class="center-right-infinite-list">
       <el-scrollbar style="height:100%">
-        <div style="width: 800px;overflow:auto">
-          <el-tree style="width: 606px"
+        <div style="width: 800px;overflow: visible">
+          <el-tree style="width: 100%"
                    @node-click="handleNodeClick"
                    :data="deps"
                    :props="defaultProps"
@@ -36,23 +36,23 @@
                    ref="tree">
             <!--node纸当前元素，data指当前元素的数据，子树数据-->
             <span class="custom-tree-node"
-                  style="display: flex;justify-content: space-between;width: 100%;"
+                  style="display: flex;justify-content: flex-start;align-items: center; width: 100%; max-width: 800px;"
                   slot-scope="{ node, data }">
-              <span>{{data.name }}</span>
-              <span>
+              <span style="margin-left: 8px; flex: 1;">{{data.name }}</span>
+              <div style="display: flex; gap: 10px; width: 180px; z-index: 10; margin-left: 10px; margin-right: 10px;">
                 <el-button type="primary"
                            size="mini"
-                           class="depBtn"
-                           @click="() => showAddDepView(data)">
+                           @click="() => showAddDepView(data)"
+                           style="padding: 4px 10px; font-size: 12px; width: 80px; z-index: 11;">
                   添加部门
                 </el-button>
                 <el-button type="danger"
                            size="mini"
-                           class="depBtn"
-                           @click="() => deleteDep(data)">
+                           @click="() => deleteDep(data)"
+                           style="padding: 4px 10px; font-size: 12px; width: 80px; z-index: 11;">
                   删除部门
                 </el-button>
-              </span>
+              </div>
             </span>
           </el-tree>
         </div>
@@ -332,7 +332,6 @@ export default {
 .el-scrollbar__wrap {
   overflow: scroll;
   overflow-x: auto;
-  overflow-x: hidden;
 }
 
 .center-right-infinite-list {
