@@ -4,7 +4,7 @@ Thumbs.db
 Desktop.ini
 
 # ===== Application properties =====
-.\hros\src\main\resources\application.properties
+hros/src/main/resources/application.properties
 
 .idea/
 .vscode/
@@ -20,10 +20,15 @@ hros/target/
 # ===== Node (frontend: HROS-UI) =====
 HROS-UI/node_modules/
 HROS-UI/dist/
+HROS-UI/.cache/
+HROS-UI/.temp/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # ===== Build artifacts / misc =====
 *.class
@@ -32,9 +37,14 @@ pnpm-debug.log*
 *.ear
 
 # ===== Backend static resources (built from frontend) =====
+# 前端构建后的静态资源（集成部署时生成，不应提交到版本控制）
 hros/src/main/resources/static/css/
 hros/src/main/resources/static/js/
 hros/src/main/resources/static/img/
 hros/src/main/resources/static/fonts/
+hros/src/main/resources/static/index.html
+hros/src/main/resources/static/favicon.ico
+# 清理嵌套的 static 目录
+hros/src/main/resources/static/static/
 
 

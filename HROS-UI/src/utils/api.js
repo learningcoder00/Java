@@ -13,7 +13,13 @@ axios.interceptors.response.use(success => {
             Message.error({ message: success.data.msg })
             return;
         }
-        if (success.data.msg) {
+        // 不显示登录成功提示，避免重复提示
+        // 排除登录和菜单配置接口的成功消息
+        const url = success.config.url || '';
+        const shouldShowMessage = !url.includes('/doLogin') && 
+                                  !url.includes('/system/config/menu') &&
+                                  success.data.msg;
+        if (shouldShowMessage) {
             Message.success({ message: success.data.msg })
         }
         return success.data;
@@ -23,7 +29,6 @@ axios.interceptors.response.use(success => {
         } else if (error.response.status == 403) {
             Message.error({ message: '权限不足，请联系管理员' })
         } else if (error.response.status == 401) {
-            Message.error({ message: '尚未登录，请登录' })
             router.replace('/');
         } else {
             if (error.response.data.msg) {

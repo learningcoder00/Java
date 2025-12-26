@@ -1,15 +1,15 @@
 /* 全局CSS变量定义 */
 :root {
-  /* 主题颜色 */
-  --primary-color: #5470C6;
-  --success-color: #91CC75;
-  --warning-color: #FAC858;
-  --danger-color: #EE6666;
-  --info-color: #73C0DE;
+  /* 主题颜色 - 紫色调 */
+  --primary-color: #7B68EE;
+  --success-color: #9D7CE8;
+  --warning-color: #BA55D3;
+  --danger-color: #DA70D6;
+  --info-color: #9370DB;
   
   /* 背景颜色 */
   --bg-color: #f5f7fa;
-  --header-bg: #5470C6;
+  --header-bg: #7B68EE;
   --aside-bg: #304156;
   --card-bg: #ffffff;
   
@@ -276,6 +276,67 @@ html, body {
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.12);
 }
 
+.shadow-xl {
+  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* 卡片美化 */
+.el-card {
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+
+.el-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 按钮美化 */
+.el-button {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.el-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.el-button:active {
+  transform: translateY(0);
+}
+
+/* 输入框美化 */
+.el-input__inner {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.el-input__inner:focus {
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* 表格美化 */
+.el-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.el-table th {
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+  font-weight: 600;
+}
+
+/* 面包屑美化 */
+.el-breadcrumb {
+  padding: 15px 0;
+}
+
+.el-breadcrumb__inner {
+  font-weight: 500;
+}
+
 /* 过渡效果工具类 */
 .transition {
   transition: all 0.3s ease;
@@ -296,4 +357,59 @@ html, body {
 
 .cursor-default {
   cursor: default;
+}
+
+/* 统一确认对话框按钮大小 */
+.el-message-box__btns .el-button {
+  min-width: 80px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.el-message-box__btns .el-button--default {
+  min-width: 80px;
+}
+
+.el-message-box__btns .el-button--primary {
+  min-width: 80px;
+}
+
+/* 导航栏菜单项背景透明 */
+.el-menu-horizontal {
+  background-color: transparent !important;
+}
+
+.el-menu-horizontal .el-menu-item,
+.el-menu-horizontal .el-submenu__title {
+  background-color: transparent !important;
+}
+
+.el-menu-horizontal .el-menu-item:hover,
+.el-menu-horizontal .el-submenu__title:hover {
+  background-color: transparent !important;
+}
+
+.el-menu-horizontal .el-menu-item.is-active,
+.el-menu-horizontal .el-submenu.is-active .el-submenu__title {
+  background-color: transparent !important;
+}
+
+.el-menu-horizontal .el-submenu {
+  background-color: transparent !important;
+}
+
+.el-menu-horizontal .el-submenu__title {
+  background-color: transparent !important;
+}
+
+/* 下拉菜单宽度与父菜单项一致 */
+.el-menu--horizontal .el-menu--popup {
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.el-menu--horizontal .el-menu--popup .el-menu-item {
+  min-width: 0 !important;
+  white-space: nowrap;
+  padding: 0 20px;
 }

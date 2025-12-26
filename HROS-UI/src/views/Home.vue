@@ -3,11 +3,14 @@
 
     <el-container>
       <el-header class="homeHeader">
-        <div style="display: flex; align-items: center; width: 100%">
-          <div style="margin-right: 30px"><i class="fa fa-magnet fa-2x" style="color: #d9c9c9"/>&nbsp; <font id="title">智慧人事管理系统</font></div>
+        <div style="display: flex; align-items: center; width: 100%; position: relative;">
+          <div class="header-logo-container" style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+            <img src="@/common/img/logo.png" class="header-logo" alt="智管人事系统" />
+            <font id="title">智管人事系统</font>
+          </div>
           
-          <!-- 水平导航菜单 -->
-          <div style="flex: 1">
+          <!-- 水平导航菜单 - 绝对居中 -->
+          <div class="header-menu-center">
             <el-menu class="el-menu-horizontal"
                      router
                      unique-opened
@@ -18,7 +21,7 @@
                           v-for="(item, index) in routes"
                           :key="index">
                 <template slot="title">
-                  <i style="color: #ffffff; margin-right: 5px;"
+                  <i style="color: #7B68EE; margin-right: 5px;"
                      :class="item.iconcls"></i>
                   <span>{{ item.name }}</span>
                 </template>
@@ -33,7 +36,7 @@
             </el-menu>
           </div>
 
-          <div style="display: flex; align-items: center; margin-left: 30px">
+          <div class="header-actions" style="display: flex; align-items: center; flex-shrink: 0;">
             <span class="el-dropdown-link">
               <i class="fa fa-envelope fa-1x "
                  style="cursor: pointer;margin-right:10px"
@@ -55,7 +58,7 @@
           </div>
         </div>
       </el-header>
-      <el-main>
+      <el-main style="overflow: hidden; height: calc(100vh - 60px);">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }"
                                 v-show=" this.$router.currentRoute.path!=='/home'">
@@ -167,31 +170,70 @@ export default {
 
 .homeRouterViewA,
 .homeRouterViewB {
-  margin-top: 10px;
+  margin-top: 20px;
   width: 100%;
-  min-height: calc(100vh - 100px);
+  height: calc(100vh - 120px);
+  max-height: calc(100vh - 120px);
+  padding: 0 20px;
+  background: linear-gradient(to bottom, #f5f7fa 0%, #ffffff 100%);
+  overflow: hidden;
 }
 
 .homeHeader {
-  background-color: #76d3e3;
-  /* //弹性布局,设为Flex布局以后，子元素的float、clear和vertical-align属性将失效。*/
+  background: transparent;
   display: flex;
-  /* //居中对齐弹性盒的各项  元素：*/
   align-items: center;
-  /*在弹性盒对象的  元素中的各项周围留有空白：*/
   justify-content: space-between;
-  padding: 0px 15px;
-  /*你想要设置的边框和内边距的值是包含在width内的*/
+  padding: 0px 20px;
   box-sizing: border-box;
-  /*向方框添加一个或多个阴影。*/
-  /*box-shadow:0px 10px 10px -4px #409eff;*/
   font-family: 站酷庆科黄油体;
   height: 60px;
+  position: relative;
+  z-index: 100;
+  transition: all 0.3s ease;
 }
+
+.header-logo-container {
+  flex-shrink: 0;
+  margin-left: 60px;
+}
+
+.header-menu-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+}
+
+.header-actions {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 
 #title {
   font-size: 20px;
-  color: #ffffff;
+  color: #7B68EE;
+  font-weight: 600;
+}
+
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .homeHeader .userInfo {
@@ -211,22 +253,69 @@ export default {
   display: flex;
   /* //居中对齐弹性盒的各项  元素：*/
   align-items: center;
-  color: #ffffff;
-  font-weight: bolder;
+  color: #7B68EE;
+  font-weight: 600;
   font-size: 15px;
-  border: #ffffff;
 }
 
 .el-menu-horizontal {
   border-bottom: none;
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .el-menu-horizontal .el-menu-item,
 .el-menu-horizontal .el-submenu__title {
-  color: #ffffff;
+  color: #7B68EE;
   height: 60px;
   line-height: 60px;
   border-bottom: none;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  border-radius: 6px;
+  background-color: transparent !important;
+}
+
+.el-menu-horizontal .el-menu-item:hover,
+.el-menu-horizontal .el-submenu__title:hover {
+  background-color: transparent !important;
+  color: #7B68EE;
+}
+
+.el-menu-horizontal .el-menu-item.is-active,
+.el-menu-horizontal .el-submenu.is-active .el-submenu__title {
+  background-color: transparent !important;
+  color: #7B68EE;
+  border-bottom: 3px solid #7B68EE;
+}
+
+.el-menu-horizontal .el-submenu__title {
+  background-color: transparent !important;
+}
+
+/* 下拉菜单宽度与父菜单项一致 */
+.el-menu--horizontal .el-menu {
+  min-width: auto !important;
+}
+
+.el-menu--horizontal .el-menu--popup {
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.el-menu--horizontal .el-menu--popup .el-menu-item {
+  min-width: 0 !important;
+  white-space: nowrap;
+  padding: 0 20px;
+}
+
+/* 确保下拉菜单宽度与父菜单项标题宽度一致 */
+.el-menu--horizontal .el-submenu .el-menu {
+  min-width: 0 !important;
+}
+
+/* 下拉菜单容器宽度 */
+.el-menu--horizontal .el-submenu .el-menu--popup {
+  min-width: 0 !important;
+  width: auto !important;
 }
 </style>

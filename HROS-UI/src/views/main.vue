@@ -1,72 +1,50 @@
 <template>
-  <div style="display: flex;justify-content: space-between; ">
-    <div style="width: 300px">
-        <!--icon="fa fa-circle-o-notch fa-spin fa-3x fa-fw"-->
-         <el-timeline>
-    <el-timeline-item style="width:130px"
-      v-for="(activity, index) in logs"
-      :key="index"
-      icon="fa fa-cog fa-spin fa-5x fa-fw"
-      type="primary"
-      color="409eff"
-      size="large"
-      :timestamp="activity.adddate" >
+  <div class="welcome-container">
+    <div class="welcome-content">
+      <!-- 主标题 -->
+      <div class="welcome-title">
+        <i class="fa fa-users fa-3x welcome-icon"></i>
+        <h1 class="title-text">欢迎使用智管人事系统</h1>
+        <p class="subtitle-text">Welcome to Smart HR Management System</p>
+      </div>
 
-            <h4>{{activity.logTypss.logtypemsg}}</h4>
-            <h4>  {{activity.operate}}</h4>
-            <h4>{{activity.hrname}} </h4>
-
-    </el-timeline-item>
-  </el-timeline>
-     
-    </div>
-    <div style="display: flex;margin-right: 10px;flex-wrap: wrap">
-      <!-- <div style="font-size: 30px;display:flex;justify-content: center;font-family:站酷庆科黄油体;width:100%">公 告</div> -->
-      <div class="center-right-infinite-lists">
-        <el-scrollbar style="height:100%;">
-          <div class="infinite-list-wrapper"
-               style="overflow:auto;display: flex; align-items: center">
-
-            <ul class="list"
-                style="align-items: center"
-                v-loading.fullscreen.lock="loading"
-                element-loading-spinner="fa fa-spinner fa-pulse fa-3x fa-fw"
-                v-infinite-scroll="load"
-                infinite-scroll-disabled="disabled">
-
-              <li v-for="(mainnotice,index ) in mainnotices"
-                  :key="index"
-                  class="list-item"
-                  :style="{width:rightclass}">
-                <el-card class="box-cards">
-                  <div slot="header"
-                       style="height:1px;width:100%">
-                    <span style="font-family: 站酷庆科黄油体;font-size: 30px;margin-top: 10px; margin-bottom:10px;">TITLE:{{mainnotice.title}}</span>
-                    <el-button style="float: right; padding: 3px 0;font-size: 15px;font-family: 站酷庆科黄油体"
-                               type="text">
-                      RELEASETIME:{{mainnotice.createTime}}
-                    </el-button>
-                    <el-button style="float: right;margin-right:15px; padding: 3px 0;font-size: 15px;font-family: 站酷庆科黄油体"
-                               type="text">
-                      ISSUER:{{mainnotice.authon}}
-                    </el-button>
-                  </div>
-                  <div class="ql-container ql-snow">
-                    <div class="ql-editor">
-                      <Xqs class="details_box"
-                           v-html="mainnotice.mainbody"></Xqs>
-                    </div>
-                  </div>
-                </el-card>
-              </li>
-            </ul>
+      <!-- 功能卡片 -->
+      <div class="feature-cards">
+        <div class="feature-card">
+          <div class="card-icon">
+            <i class="el-icon-user-solid"></i>
           </div>
-          <el-backtop target=".center-right-infinite-lists .el-scrollbar__wrap "></el-backtop>
-        </el-scrollbar>
+          <h3>人事管理</h3>
+          <p>高效管理员工信息</p>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">
+            <i class="el-icon-s-data"></i>
+          </div>
+          <h3>数据统计</h3>
+          <p>实时数据分析</p>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">
+            <i class="el-icon-document"></i>
+          </div>
+          <h3>系统配置</h3>
+          <p>灵活的系统设置</p>
+        </div>
+        <div class="feature-card">
+          <div class="card-icon">
+            <i class="el-icon-setting"></i>
+          </div>
+          <h3>权限管理</h3>
+          <p>安全的权限控制</p>
+        </div>
+      </div>
+
+      <!-- 底部提示 -->
+      <div class="welcome-footer">
+        <p>请使用顶部导航菜单开始使用系统功能</p>
       </div>
     </div>
-  
-  
   </div>
 </template>
 
@@ -75,128 +53,204 @@ export default {
   name: "main",
   data () {
     return {
-      mainnotices: [],
-      mainnotice: {
-        id: '',
-        title: '',
-        mainbody: '',
-        authon: '',
-        createtime: '',
-        updatetime: '',
-        logs: {
-
-        }
-      },
-      loading: false,
-      count: 2,
-      activity: {
-        content: '支持使用图标',
-        timestamp: '2018-04-12 20:46',
-        size: 'large',
-        type: 'primary',
-        icon: 'fa fa-cog fa-spin fa-5x fa-fw',
-        color: '#409eff'
-      },
-      imagesbox: [{
-        id: 3,
-        idView: require("../common/img/tu3.png")
-      }, {
-        id: 4,
-        idView: require("../common/img/tu4.png")
-      }, {
-        id: 5,
-        idView: require("../common/img/tu5.png")
-      },]
     }
   },
   mounted () {
-    this.initAmg();
-    this.initlog();
-     this.$nextTick(() => {
-                    setInterval(this.initlog, 50000);
-                })
-    
   },
   methods: {
-
-    initAmg () {
-      this.loading = true;
-      this.getRequest("/body/").then(resp => {
-        if (resp) {
-
-          this.mainnotices = resp;
-        }
-      })
-    },
-    initlog () {
-      this.getRequest("/log/").then(resp => {
-        if (resp) {
-          this.loading = false;
-          this.logs = resp;
-        }
-      })
-    },
-    load () {
-    },
-    computed: {
-      routes () {
-        return this.$store.state.routes
-      },
-      noMore () {
-        return this.count >= 25
-      },
-      disabled () {
-        return this.loading || this.noMore
-      }
-
-    },
   }
 }
 </script>
 
-<style >
-.box-cards {
-  overflow-x: hidden;
-}
-.center-right-infinite-lists .el-scrollbar__wrap {
-  overflow-x: hidden;
-}
-
-.infinite-list-wrapper {
-  overflow-x: hidden;
-}
-
-.center-right-infinite-lists {
-  width: 1500px;
-  height: 740px;
-  overflow-x: hidden;
-}
-/*如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。*/
-/* overflow: auto;*/
-/*如果它溢出了元素的内容区-剪辑div元素的左/右边缘内容：*/
-/* overflow-x: hidden;*/
-
-.list-item {
-  border-radius: 8px;
-  margin-top: 5px;
-  margin-bottom: 50px;
-  margin-right: 20px;
-   list-style: none;
-  /*// 边框阴影*/
-  /* box-shadow: 0 0 30px #cac6c6;*/
-  /*背景裁剪在背景边框内部*/
-  background-clip: padding-box;
-  background: #ffffff;
-  color: #475669;
-  font-size: 25px;
+<style scoped>
+.welcome-container {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e6e1f5 100%);
+  padding: 20px;
+  padding-top: 60px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.homeWelcome {
+.welcome-content {
+  max-width: 1200px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.8s ease-out;
+  overflow: hidden;
+  padding-top: 70px;
+  padding-bottom: 40px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcome-title {
   text-align: center;
-  font-size: 30px;
+  margin-bottom: 50px;
+  margin-top: 20px;
+  flex-shrink: 0;
+}
+
+.welcome-icon {
+  color: #7B68EE;
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.title-text {
+  font-size: 42px;
+  font-weight: bold;
   font-family: 站酷庆科黄油体;
-  color: #409eff;
-  /*display: flex;
-        align-items: center;*/
+  background: linear-gradient(135deg, #7B68EE 0%, #9370DB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 20px 0;
+  letter-spacing: 2px;
+}
+
+.subtitle-text {
+  font-size: 18px;
+  color: #909399;
+  margin-top: 10px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  margin-bottom: 30px;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.feature-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 45px 35px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #7B68EE 0%, #9370DB 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .card-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.feature-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #303133;
+  margin: 15px 0 10px;
+  font-family: 站酷庆科黄油体;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #909399;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.welcome-footer {
+  text-align: center;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+}
+
+.welcome-footer p {
+  font-size: 16px;
+  color: #606266;
+  margin: 0;
+  font-family: 站酷庆科黄油体;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .feature-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .title-text {
+    font-size: 32px;
+  }
+  
+  .welcome-title {
+    margin-bottom: 30px;
+  }
+  
+  .feature-cards {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .feature-card {
+    padding: 25px 20px;
+  }
+  
+  .welcome-footer {
+    padding-top: 15px;
+  }
 }
 </style>
