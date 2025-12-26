@@ -3,6 +3,9 @@
 Thumbs.db
 Desktop.ini
 
+# ===== Application properties =====
+.\hros\src\main\resources\application.properties
+
 .idea/
 .vscode/
 *.iml
@@ -27,5 +30,11 @@ pnpm-debug.log*
 *.jar
 *.war
 *.ear
+
+# ===== Backend static resources (built from frontend) =====
+hros/src/main/resources/static/css/
+hros/src/main/resources/static/js/
+hros/src/main/resources/static/img/
+hros/src/main/resources/static/fonts/
 
 
