@@ -16,7 +16,8 @@
                      unique-opened
                      active-text-color="#67C23A"
                      mode="horizontal"
-                     @select="menusClick">
+                     @select="menusClick"
+                     :default-active="activeIndex">
               <el-submenu :index="index+''"
                           v-for="(item, index) in routes"
                           :key="index">
@@ -58,7 +59,7 @@
           </div>
         </div>
       </el-header>
-      <el-main style="overflow: hidden; height: calc(100vh - 60px);">
+      <el-main style="overflow: auto; height: calc(100vh - 60px);">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }"
                                 v-show=" this.$router.currentRoute.path!=='/home'">
@@ -95,9 +96,16 @@ export default {
       //获取用户信息，从sessionStorage中提取信息转换为
       user: JSON.parse(window.sessionStorage.getItem("user")),
       dialogTableVisible: false,
+      activeIndex: '', // 控制导航栏高亮状态
     }
   },
   mounted() {
+    // 初始化导航栏高亮状态
+    if (this.$route.path === '/home') {
+      this.activeIndex = '';
+    } else {
+      this.activeIndex = this.$route.path;
+    }
   },
   methods: {
     pageChar() {
@@ -152,6 +160,15 @@ export default {
   },
   watch: {
     // 顶部导航栏不需要监听折叠状态
+    $route(path) {
+      // 当路由为首页时，清除导航栏高亮状态
+      if (path.path === '/home') {
+        this.activeIndex = '';
+      } else {
+        // 当路由为其他页面时，设置对应的高亮状态
+        this.activeIndex = path.path;
+      }
+    }
   },
   components: {
     Main, pageChar
@@ -176,7 +193,7 @@ export default {
   max-height: calc(100vh - 120px);
   padding: 0 20px;
   background: linear-gradient(to bottom, #f5f7fa 0%, #ffffff 100%);
-  overflow: hidden;
+  overflow: auto;
 }
 
 .homeHeader {
