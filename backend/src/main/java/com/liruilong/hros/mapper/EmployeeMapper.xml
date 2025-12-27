@@ -231,43 +231,48 @@
     <select id="getEmployeeByPage" resultMap="AllEmployeeInfo">
         select e.*,p.`id` as pid,p.`name` as pname,n.`id` as nid, n.`name` as nname,d.`id` as did,d.`name` as
         dname,j.`id` as jid,j.`name` as jname,pos.`id` as posid, pos.`name` as posname, hr.id as hId, hr.work_date, hr.enabled
-        from employee e
-        inner join nation n on e.`nationId`=n.`id`
-        inner join politicsstatus p on e.`politicId`=p.`id`
-        inner join department d on e.`departmentId`=d.`id`
-        inner join joblevel j on e.`jobLevelId`=j.`id`
-        inner join position pos on e.`posId`=pos.`id`
+        from (
+            SELECT * FROM employee e
+            <where>
+                <if test="emp != null">
+                    <if test="emp.name !=null and emp.name!=''">
+                        and e.name like concat('%',#{emp.name},'%')
+                    </if>
+                    <if test="emp.politicid !=null">
+                        and e.politicId =#{emp.politicid}
+                    </if>
+                    <if test="emp.nationid !=null">
+                        and e.nationId =#{emp.nationid}
+                    </if>
+                    <if test="emp.joblevelid !=null">
+                        and e.jobLevelId =#{emp.joblevelid}
+                    </if>
+                    <if test="emp.departmentid !=null">
+                        and e.departmentId =#{emp.departmentid}
+                    </if>
+                    <if test="emp.engageform !=null and emp.engageform!=''">
+                        and e.engageForm =#{emp.engageform}
+                    </if>
+                    <if test="emp.posid !=null">
+                        and e.posId =#{emp.posid}
+                    </if>
+                </if>
+                <if test="beginDateScope !=null">
+                    and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+                </if>
+            </where>
+            order by e.workID DESC
+            <if test="page !=null and size!=null">
+                limit #{page},#{size}
+            </if>
+        ) e
+        left join nation n on e.`nationId`=n.`id`
+        left join politicsstatus p on e.`politicId`=p.`id`
+        left join department d on e.`departmentId`=d.`id`
+        left join joblevel j on e.`jobLevelId`=j.`id`
+        left join position pos on e.`posId`=pos.`id`
         left join hr on hr.`employee_id` = e.id
-        <if test="emp != null">
-            <if test="emp.name !=null and emp.name!=''">
-                and e.name like concat('%',#{emp.name},'%')
-            </if>
-            <if test="emp.politicid !=null">
-                and e.politicId =#{emp.politicid}
-            </if>
-            <if test="emp.nationid !=null">
-                and e.nationId =#{emp.nationid}
-            </if>
-            <if test="emp.joblevelid !=null">
-                and e.jobLevelId =#{emp.joblevelid}
-            </if>
-            <if test="emp.departmentid !=null">
-                and e.departmentId =#{emp.departmentid}
-            </if>
-            <if test="emp.engageform !=null and emp.engageform!=''">
-                and e.engageForm =#{emp.engageform}
-            </if>
-            <if test="emp.posid !=null">
-                and e.posId =#{emp.posid}
-            </if>
-        </if>
-        <if test="beginDateScope !=null">
-            and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
-        </if>
         order by e.workID DESC
-        <if test="page !=null and size!=null">
-            limit #{page},#{size}
-        </if>
     </select>
     <select id="getEmployeecByPage" resultMap="BaseResultMapecc">
         SELECT
@@ -356,19 +361,31 @@
           and e.`name` = #{name}
     </select>
     <select id="getEmployeeByPageWithSalary" resultMap="EmployeeWithSalary">
-        SELECT distinct e.*,d.`name` AS dname,s.`id` AS sid,s.`accumulationFundBase` AS
-        saccumulationFundBase,s.`accumulationFundPer` AS saccumulationFundPer,s.`allSalary` AS
-        sallSalary,s.`basicSalary` AS sbasicSalary,s.`bonus` AS sbonus,s.`createDate` AS screateDate,s.`lunchSalary` AS
-        slunchSalary,s.`medicalBase` AS smedicalBase,s.`medicalPer` AS smedicalPer,s.`name` AS sname,s.`pensionBase` AS
-        spensionBase,s.`pensionPer` AS spensionPer,s.`trafficSalary` AS strafficSalary ,j.`id` as jid,j.`name` as
-        jname,pos.`id` as posid,pos.`name` as posname
-        FROM employee e LEFT JOIN
-        empsalary es ON e.`id`=es.`eid` LEFT JOIN salary s ON es.`sid`=s.`id` LEFT JOIN department d ON
-        e.`departmentId`=d.`id` left join joblevel j on e.`jobLevelId`=j.`id` left join position pos on e.posId = pos.id
-        order by e.workID DESC
-        <if test="page !=null and size !=null">
-            limit #{page},#{size}
-        </if>
+        SELECT e.*,
+               d.`id` as did, d.`name` AS dname,
+               s.`id` AS sid, s.`accumulationFundBase` AS saccumulationFundBase, s.`accumulationFundPer` AS saccumulationFundPer,
+               s.`allSalary` AS sallSalary, s.`basicSalary` AS sbasicSalary, s.`bonus` AS sbonus, s.`createDate` AS screateDate,
+               s.`lunchSalary` AS slunchSalary, s.`medicalBase` AS smedicalBase, s.`medicalPer` AS smedicalPer,
+               s.`name` AS sname, s.`pensionBase` AS spensionBase, s.`pensionPer` AS spensionPer, s.`trafficSalary` AS strafficSalary,
+               j.`id` as jid, j.`name` as jname,
+               pos.`id` as posid, pos.`name` as posname,
+               n.`id` as nid, n.`name` as nname,
+               p.`id` as pid, p.`name` as pname
+        FROM (
+            SELECT * FROM employee 
+            ORDER BY workID DESC
+            <if test="page !=null and size !=null">
+                limit #{page},#{size}
+            </if>
+        ) e 
+        LEFT JOIN empsalary es ON e.`id`=es.`eid` 
+        LEFT JOIN salary s ON es.`sid`=s.`id` 
+        LEFT JOIN department d ON e.`departmentId`=d.`id` 
+        LEFT JOIN joblevel j ON e.`jobLevelId`=j.`id` 
+        LEFT JOIN position pos ON e.posId = pos.id
+        LEFT JOIN nation n ON e.nationId = n.id
+        LEFT JOIN politicsstatus p ON e.politicId = p.id
+        ORDER BY e.workID DESC
     </select>
     <select id="dataViewPosition" resultMap="DataViewbean">
         select pos.`name` as name, COUNT(*) as sum
@@ -767,42 +784,47 @@
         j.`name` AS jname,
         pos.`id` AS posid,
         pos.`name` AS posname
-        FROM
-        employee e
+        FROM (
+            SELECT * FROM employee e
+            <where>
+                <if test="emp != null">
+                    <if test="emp.name !=null and emp.name!=''">
+                        and e.name like concat('%',#{emp.name},'%')
+                    </if>
+                    <if test="emp.politicid !=null">
+                        and e.politicId =#{emp.politicid}
+                    </if>
+                    <if test="emp.nationid !=null">
+                        and e.nationId =#{emp.nationid}
+                    </if>
+                    <if test="emp.joblevelid !=null">
+                        and e.jobLevelId =#{emp.joblevelid}
+                    </if>
+                    <if test="emp.departmentid !=null">
+                        and e.departmentId =#{emp.departmentid}
+                    </if>
+                    <if test="emp.engageform !=null and emp.engageform!=''">
+                        and e.engageForm =#{emp.engageform}
+                    </if>
+                    <if test="emp.posid !=null">
+                        and e.posId =#{emp.posid}
+                    </if>
+                </if>
+                <if test="beginDateScope !=null">
+                    and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+                </if>
+            </where>
+            order by e.workID DESC
+            <if test="page !=null and size !=null">
+                limit #{page},#{size}
+            </if>
+        ) e
         INNER JOIN empsalary es ON e.`id` = es.`eid`
         INNER JOIN salary s ON es.`sid` = s.`id`
         INNER JOIN department d ON e.`departmentId` = d.`id`
         INNER JOIN joblevel j ON e.`jobLevelId` = j.`id`
         INNER JOIN position pos ON e.posId = pos.id
-        <if test="emp != null">
-            <if test="emp.name !=null and emp.name!=''">
-                and e.name like concat('%',#{emp.name},'%')
-            </if>
-            <if test="emp.politicid !=null">
-                and e.politicId =#{emp.politicid}
-            </if>
-            <if test="emp.nationid !=null">
-                and e.nationId =#{emp.nationid}
-            </if>
-            <if test="emp.joblevelid !=null">
-                and e.jobLevelId =#{emp.joblevelid}
-            </if>
-            <if test="emp.departmentid !=null">
-                and e.departmentId =#{emp.departmentid}
-            </if>
-            <if test="emp.engageform !=null and emp.engageform!=''">
-                and e.engageForm =#{emp.engageform}
-            </if>
-            <if test="emp.posid !=null">
-                and e.posId =#{emp.posid}
-            </if>
-        </if>
-        <if test="beginDateScope !=null">
-            and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
-        </if>
-        <if test="page !=null and size !=null">
-            limit #{page},#{size}
-        </if>
+        ORDER BY e.workID DESC
     </select>
     <select id="getTotaS" resultType="java.lang.Long">
         SELECT DISTINCT COUNT(*)
@@ -890,18 +912,12 @@
             LEFT JOIN empsalary es ON e.`id` = es.`eid`
             LEFT JOIN salary s ON es.`sid` = s.`id`
             LEFT JOIN employeetrain et ON e.id = et.eid
-            LEFT JOIN appraise a ON e.id = a.eid,
-            nation n,
-            politicsstatus p,
-            department d,
-            joblevel j,
-            position pos
-        WHERE
-            e.`nationId` = n.`id`
-            AND e.`politicId` = p.`id`
-            AND e.`departmentId` = d.`id`
-            AND e.`jobLevelId` = j.`id`
-            AND e.`posId` = pos.`id`
+            LEFT JOIN appraise a ON e.id = a.eid
+            LEFT JOIN nation n ON e.`nationId` = n.`id`
+            LEFT JOIN politicsstatus p ON e.`politicId` = p.`id`
+            LEFT JOIN department d ON e.`departmentId` = d.`id`
+            LEFT JOIN joblevel j ON e.`jobLevelId` = j.`id`
+            LEFT JOIN position pos ON e.`posId` = pos.`id`
         order by e.workID DESC
     </select>
     <select id="getTotalE" resultType="java.lang.Long">

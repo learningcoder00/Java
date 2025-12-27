@@ -33,7 +33,7 @@ public class SalartTableController {
     SalaryService salaryService;
 
     @GetMapping("/")
-    public RespPageBean getAllsalarts(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Employee employee, Date[] beginDateScope) {
+    public RespPageBean getAllsalarts(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "11") Integer size, Employee employee, Date[] beginDateScope) {
         return employeeService.getAllsalarts(page, size, employee, beginDateScope);
     }
 
