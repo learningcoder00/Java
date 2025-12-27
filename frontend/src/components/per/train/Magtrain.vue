@@ -50,9 +50,10 @@
                              label="电子邮件">
             </el-table-column>
             <el-table-column prop="phone"
-                             width="100"
+                             width="120"
                              align="left"
-                             label="电话号码">
+                             label="电话号码"
+                             :show-overflow-tooltip="true">
             </el-table-column>
             <!--  -->
             <el-table-column prop="employeetrainList.traincontent"

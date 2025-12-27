@@ -14,6 +14,7 @@
       </el-select>
       <el-date-picker v-model="beginDateScope"
                       type="daterange"
+                      class="date-range-picker"
                       align="center"
                       unlink-panels
                       value-format="yyyy-MM-dd"
@@ -24,7 +25,8 @@
       </el-date-picker>
       <el-button icon="el-icon-search"
                  type="primary"
-                 style="margin-left:20px"
+                 class="search-btn"
+                 style="margin-left:10px"
                  @click="initlog">
         搜索
       </el-button>
@@ -68,10 +70,9 @@
       </el-scrollbar>
     </div>
     <div class="bottom-log-style">
-      <div>
-        <el-button @click="refershMany"
-                   type="primary"
-                   style="margin-top: 8px">刷 新
+      <div class="sys-batch-btn-container">
+        <el-button class="sys-action-btn" @click="refershMany"
+                   type="primary">刷 新
         </el-button>
       </div>
       <el-pagination style="margin-top: 10px;margin-right:320px"
@@ -188,6 +189,7 @@ export default {
   margin: 10px 0px;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 .centon-log-style {
   margin-top: 10px;

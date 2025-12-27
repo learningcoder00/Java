@@ -55,12 +55,15 @@
               <template slot-scope="scope">
                 <el-button size="mini"
                            type="success"
+                           class="table-action-btn"
                            @click="showView(scope.row)">预览</el-button>
                 <el-button size="mini"
                            type="danger"
+                           class="table-action-btn"
                            @click="deleteHandler(scope.row)">删除</el-button>
                 <el-button size="mini"
                            type="primary"
+                           class="table-action-btn"
                            @click="showEditView(scope.row)">修改</el-button>
               </template>
             </el-table-column>
@@ -69,15 +72,14 @@
       </el-scrollbar>
     </div>
     <div class="bottom-style">
-      <div>
-        <el-button type="danger"
-                   style="margin-top: 10px"
+      <div class="sys-batch-btn-container">
+        <el-button class="sys-action-btn" type="danger"
                    :disabled="multipleSelection.length==0"
                    @click="deleteMany">批量删除
         </el-button>
         <el-button @click="refershMany"
-                   type="primary"
-                   style="margin-top: 8px">刷 新
+                   class="sys-action-btn"
+                   type="primary">刷 新
         </el-button>
       </div>
       <el-pagination style="margin-top: 10px;margin-right:320px"

@@ -3,9 +3,11 @@
     <div style="display: flex;justify-content: space-between">
       <el-button icon="el-icon-plus"
                  type="primary"
+                 class="search-btn"
                  @click="showAddSalaryView">添加工资账套</el-button>
       <el-button icon="el-icon-refresh"
                  type="success"
+                 class="search-btn"
                  @click="initSalaries">刷新</el-button>
     </div>
    
@@ -26,10 +28,10 @@
         <el-table-column width="100"
                          prop="trafficsalary"
                          label="交通补助"></el-table-column>
-        <el-table-column width="70"
+        <el-table-column width="100"
                          prop="lunchsalary"
                          label="午餐补助"></el-table-column>
-        <el-table-column width="70"
+        <el-table-column width="100"
                          prop="bonus"
                          label="奖金"></el-table-column>
         <el-table-column width="100"
@@ -65,8 +67,10 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini"
+                       class="table-action-btn"
                        @click="showEditSalaryView(scope.row)">编辑</el-button>
             <el-button size="mini"
+                       class="table-action-btn"
                        type="danger"
                        @click="deleteSalary(scope.row)">删除</el-button>
           </template>

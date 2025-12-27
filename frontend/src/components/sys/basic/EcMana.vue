@@ -14,7 +14,7 @@
                              style="margin-right: 10px">
                 <i class="el-icon-edit el-input__icon" slot="suffix"></i>
             </el-autocomplete>
-            <el-button  type="primary"    icon="el-icon-plus" @click="addrwardsPunishments">添加</el-button>
+            <el-button class="search-btn" type="primary" icon="el-icon-plus" @click="addrwardsPunishments">添加</el-button>
             <el-input
                     class="addPosInput"
                     placeholder="请输入奖惩描述进行搜索..."
@@ -22,7 +22,7 @@
                     :fetch-suggestions="querySearch"
                     v-model="rp.searchname">
             </el-input>
-            <el-button     icon="el-icon-search"  type="primary" @click="searchname">搜索</el-button>
+            <el-button class="search-btn" icon="el-icon-search" type="primary" @click="searchname">搜索</el-button>
 
         </div>
         <div style="margin-top: 10px">
@@ -49,8 +49,8 @@
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button     size="mini" @click="showEditView(scope.row)">编辑</el-button>
-                        <el-button     size="mini" type="danger" @click="deleteHandler(scope.row)">删除</el-button>
+                        <el-button size="mini" class="table-action-btn" @click="showEditView(scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" class="table-action-btn" @click="deleteHandler(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -83,11 +83,13 @@
     <el-button    size="small" type="primary" @click="doUpdate">确 定</el-button>
   </span>
             </el-dialog>
-            <el-button    type="danger" style="margin-top: 10px" :disabled="multipleSelection.length==0"
-                       @click="deleteMany">批量删除
-            </el-button>
-            <el-button    @click="refershMany" type="primary" style="margin-top: 8px">刷 新
-            </el-button>
+            <div class="sys-batch-btn-container">
+                <el-button class="sys-action-btn" type="danger" :disabled="multipleSelection.length==0"
+                           @click="deleteMany">批量删除
+                </el-button>
+                <el-button class="sys-action-btn" @click="refershMany" type="primary">刷 新
+                </el-button>
+            </div>
         </div>
     </div>
 </template>

@@ -38,6 +38,9 @@
   --spacing-md: 24px;
   --spacing-lg: 32px;
   --spacing-xl: 40px;
+
+  /* 表单控件统一高度（ElementUI 默认 40px） */
+  --form-control-height: 34px;
 }
 
 /* 全局重置和基础样式 */
@@ -53,6 +56,13 @@ html, body {
   color: var(--text-regular);
   background-color: var(--bg-color);
   line-height: 1.6;
+}
+
+/* 禁止页面滚动（按需在页面挂载时给 html/body 添加 no-page-scroll 类） */
+html.no-page-scroll,
+body.no-page-scroll {
+  overflow: hidden !important;
+  height: 100% !important;
 }
 
 /* 自定义滚动条 */
@@ -298,6 +308,146 @@ html, body {
   font-weight: 500;
 }
 
+/* ========= 搜索区：输入框/选择器/日期选择器 + 搜索按钮 高度统一 =========
+ * 目标：所有页面的“搜索按钮”与旁边输入/选择器高度一致
+ * 适配：<el-input/><el-select/><el-date-picker/> 后紧跟 <el-button> 的常见布局
+ */
+
+/* 输入框/选择器/日期控件高度统一 */
+.el-input__inner,
+.el-select .el-input__inner,
+.el-date-editor .el-input__inner {
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+  box-sizing: border-box;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.el-input__icon {
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 确保输入框前缀/后缀图标容器高度一致并居中 */
+.el-input__prefix,
+.el-input__suffix {
+  display: flex !important;
+  align-items: center !important;
+  height: var(--form-control-height) !important;
+  top: 0 !important;
+}
+
+.el-input__prefix-inner,
+.el-input__suffix-inner {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+
+/* 日期范围选择器的输入区域高度 */
+.el-date-editor--daterange,
+.el-date-editor--datetimerange {
+  height: var(--form-control-height) !important;
+}
+
+/* 关键：紧邻控件的按钮（通常就是“搜索”）高度对齐 */
+.el-input + .el-button,
+.el-select + .el-button,
+.el-date-editor + .el-button,
+.el-input-group__append .el-button {
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+/* 兼容：之前手动加的 search-btn（继续生效） */
+.search-btn {
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ========= 分页器：右侧“前往/页共”文字与输入框高度对齐 ========= */
+.el-pagination {
+  /* 保持 ElementUI 默认布局，仅做垂直居中对齐 */
+  white-space: nowrap;
+}
+
+/* “共xxx条”与前面控件增加间隔 */
+.el-pagination__total {
+  margin-left: 10px !important;
+}
+
+/* 让分页器所有“块”按同一中线对齐 */
+.el-pagination__total,
+.el-pagination__sizes,
+.el-pagination__jump,
+.el-pagination .btn-prev,
+.el-pagination .btn-next,
+.el-pagination .el-pager,
+.el-pagination .el-pager li {
+  vertical-align: middle !important;
+}
+
+/* 总条数 / 每页条数 / 前往：统一用 inline-flex 强制垂直居中 */
+.el-pagination__total,
+.el-pagination__sizes,
+.el-pagination__jump {
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* 页码/上一页/下一页：统一高度并用 flex 居中 */
+.el-pagination .btn-prev,
+.el-pagination .btn-next {
+  height: var(--form-control-height) !important;
+  min-width: var(--form-control-height) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.el-pagination .el-pager li {
+  height: var(--form-control-height) !important;
+  min-width: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 分页器里的下拉框（每页xx条）高度对齐 */
+.el-pagination__sizes .el-select,
+.el-pagination__sizes .el-input,
+.el-pagination__sizes .el-input__inner {
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+}
+
+/* “前往”输入框高度对齐 */
+.el-pagination__jump .el-input,
+.el-pagination__editor.el-input,
+.el-pagination__jump .el-input__inner,
+.el-pagination__editor.el-input .el-input__inner {
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+}
+
 /* 下拉选择框样式 - 文字居中 */
 .el-select .el-input__inner {
   text-align: center;
@@ -325,10 +475,10 @@ html, body {
 .action-button-group .el-button,
 .action-button-group .el-upload .el-button {
   min-width: 100px;
-  height: 36px;
+  height: var(--form-control-height);
   padding: 0 20px;
   font-size: 14px;
-  line-height: 36px;
+  line-height: var(--form-control-height);
 }
 
 .action-button-group .el-button + .el-button {
@@ -339,7 +489,78 @@ html, body {
   margin-right: 8px;
 }
 
-/* 统一搜索按钮大小 - 用于搜索和高级搜索按钮，与右侧操作按钮保持一致 */
+/* 系统管理：底部操作按钮（批量删除 / 刷新）统一尺寸 */
+.sys-action-btn {
+  min-width: 110px !important;
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
+  padding: 0 18px !important;
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+}
+
+/* 系统管理：底部操作按钮容器，确保内部按钮水平对齐、间距统一 */
+.sys-batch-btn-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* 表格内操作列按钮统一尺寸 */
+.table-action-btn {
+  width: 64px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12px !important;
+  border-radius: 4px !important;
+}
+
+/* 优化日期范围选择器显示，确保内容垂直居中且"至"字完整显示 */
+.date-range-picker {
+  min-width: 320px;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.date-range-picker .el-range-separator {
+  width: 30px !important;
+  padding: 0 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  font-size: 14px !important;
+  color: #606266 !important;
+}
+
+.date-range-picker .el-range-input {
+  width: 40% !important;
+  font-size: 13px !important;
+  height: 100% !important;
+  line-height: var(--form-control-height) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  vertical-align: middle !important;
+}
+
+.date-range-picker .el-range__icon,
+.date-range-picker .el-range__close-icon {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+  line-height: var(--form-control-height) !important;
+}
+
+/* 统一搜索按钮大小 - 用于搜索和高级搜索按钮，与选择器高度保持一致 */
 .search-button-group {
   display: flex;
   align-items: center;
@@ -347,25 +568,25 @@ html, body {
 
 .search-button-group .el-button {
   min-width: 100px;
-  height: 36px;
+  height: var(--form-control-height);
   padding: 0 20px;
   font-size: 14px;
-  line-height: 36px;
+  line-height: var(--form-control-height);
 }
 
 /* 确保搜索输入框与按钮高度一致并居中对齐 */
 .search-button-group .el-input {
-  height: 36px !important;
+  height: var(--form-control-height) !important;
 }
 
 .search-button-group .el-input__inner {
-  height: 36px !important;
-  line-height: 36px !important;
+  height: var(--form-control-height) !important;
+  line-height: var(--form-control-height) !important;
   box-sizing: border-box;
 }
 
 .search-button-group .el-input__icon {
-  line-height: 36px;
+  line-height: var(--form-control-height);
 }
 
 /* 搜索按钮之间的间距 */

@@ -1,6 +1,6 @@
 <template>
 
-  <div style="width: 900px;"
+  <div style="width: 1100px;"
        class="mainclassstyle"
        v-loading.fullscreen.lock="loading"
        element-loading-spinner="fa fa-spinner fa-pulse fa-3x fa-fw">
@@ -24,32 +24,30 @@
     </div>
     <div class="center-right-infinite-list">
       <el-scrollbar style="height:100%">
-        <div style="width: 800px;overflow: visible">
+        <div style="width: 1000px;overflow: visible">
           <el-tree style="width: 100%"
-                   @node-click="handleNodeClick"
                    :data="deps"
                    :props="defaultProps"
                    :expand-on-click-node="false"
                    :filter-node-method="filterNode"
-                   icon-class=""
                    :default-expand-all="true"
+                   :key="treeKey"
                    ref="tree">
             <!--node纸当前元素，data指当前元素的数据，子树数据-->
             <span class="custom-tree-node"
-                  style="display: flex;justify-content: flex-start;align-items: center; width: 100%; max-width: 800px;"
                   slot-scope="{ node, data }">
-              <span style="margin-left: 8px; flex: 1;">{{data.name }}</span>
-              <div style="display: flex; gap: 10px; width: 180px; z-index: 10; margin-left: 10px; margin-right: 10px;">
+              <span class="dep-name">{{data.name }}</span>
+              <div class="dep-actions">
                 <el-button type="primary"
                            size="mini"
                            @click="() => showAddDepView(data)"
-                           style="padding: 4px 10px; font-size: 12px; width: 80px; z-index: 11;">
+                           class="dep-action-btn">
                   添加部门
                 </el-button>
                 <el-button type="danger"
                            size="mini"
                            @click="() => deleteDep(data)"
-                           style="padding: 4px 10px; font-size: 12px; width: 80px; z-index: 11;">
+                           class="dep-action-btn">
                   删除部门
                 </el-button>
               </div>
@@ -146,6 +144,7 @@ export default {
       },
       pname: '',
       deps: [],
+      treeKey: 0,
       defaultProps: {
         children: 'children',
         label: 'name'
@@ -290,21 +289,12 @@ export default {
     /*初始数据加载*/
     initDeps () {
       this.loading = true;
-      setTimeout(() => {
-        this.$notify.success({
-          title: '系统讯息',
-          message: '部 门 信 息 加 载 中...',
-          showClose: false,
-          offset: 100,
-          duration: 1500,
-          customClass: 'fontclass'
-        });
-      }, 1300);
       this.getRequest("/system/basic/department/").then(resp => {
         if (resp) {
           this.deps = resp;
           this.chartData.rows[0].value = this.deps;
           this.loading = false;
+          this.treeKey++; // 强制重新渲染树及其插槽
           window.sessionStorage.setItem("deps", JSON.stringify(resp));
         }
       })
@@ -335,7 +325,7 @@ export default {
 }
 
 .center-right-infinite-list {
-  width: 800px;
+  width: 1000px;
   height: 690px;
 }
 
@@ -351,5 +341,54 @@ export default {
 
 .depBtn {
   padding: 2px;
+}
+
+/* 部门树节点：加大上下间距/行高（仅影响部门管理页） */
+.mainclassstyle .el-tree-node__content {
+  height: 44px;
+  margin: 6px 0;
+}
+
+/* 自定义节点：左侧名称 + 右侧固定操作区，防止按钮被压扁 */
+.mainclassstyle .custom-tree-node {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.mainclassstyle .dep-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-left: 8px;
+  padding-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 右侧操作区：加宽以完整显示“删除部门”，并增大按钮间距 */
+.mainclassstyle .dep-actions {
+  display: flex;
+  gap: 14px;
+  flex: 0 0 240px;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 10;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.mainclassstyle .dep-action-btn {
+  flex: 0 0 96px;
+  height: var(--form-control-height);
+  line-height: var(--form-control-height);
+  padding: 0 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

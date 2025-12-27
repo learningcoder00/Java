@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="top-style">
-      <div style="display: flex;justify-content: flex-start;">
+      <div class="search-button-group">
         <el-input placeholder="请输入员工名进行搜索，可以直接回车搜索..."
                   prefix-icon="el-icon-search"
                   clearable
@@ -16,7 +16,11 @@
                    :disabled="showAdvanceSearchView">
           搜索
         </el-button>
+      </div>
+
+      <div class="action-button-group" style="margin-right: 20px;">
         <el-button type="success"
+                   class="search-btn"
                    @click="exportData"
                    icon="el-icon-download">
           导出数据

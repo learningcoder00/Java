@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--弹性盒子元素在主轴（横轴）方向上的对齐方式。-->
-    <div style="display: flex;justify-content: center;margin-top: 10px">
+    <div style="display: flex;justify-content: center;margin-top: 10px;align-items: center;">
       <el-input class="addPosInput"
                 placeholder="请输入用户名进行搜索..."
                 prefix-icon="el-icon-search"
@@ -10,10 +10,13 @@
       </el-input>
       <el-button icon="el-icon-search"
                  type="primary"
+                 class="search-btn"
                  @click="searchname">搜索
       </el-button>
       <el-button type="primary"
                  icon="el-icon-plus"
+                 class="search-btn"
+                 style="margin-left: 10px"
                  @click="showAddHrView">
         添加用户
       </el-button>
@@ -25,73 +28,102 @@
          style="margin-top: 10px">
       <el-scrollbar style="height: 100%">
         <div class="hr-container">
-          <el-card class="box-card"
-                   v-for="(hr, index) in hrs"
-                   :key="index">
-            <div slot="header">
-              <span style="font-family: 站酷庆科黄油体;font-size: 25px">{{ hr.name }}</span>
-              <el-button style="float: right; padding: 3px 0;color: red"
+          <div class="hr-card"
+               v-for="(hr, index) in hrs"
+               :key="index">
+            <div class="hr-card__header">
+              <div class="hr-card__title">{{ hr.name }}</div>
+              <el-button class="hr-card__delete-btn"
                          type="text"
-                         size="mini"
                          icon="el-icon-delete"
                          @click="deletehr(hr)"></el-button>
             </div>
-            <div>
-              <div class="img-container">
-                <el-divider>
-                  <el-image :src="hr.userface"
-                            :alt="hr.name"
-                            :title="hr.name"
-                            class="userface-img"/>
-                </el-divider>
+            <div class="hr-card__body">
+              <div class="hr-card__avatar-wrapper">
+                <el-image :src="hr.userface"
+                          :alt="hr.name"
+                          :title="hr.name"
+                          class="hr-card__avatar"/>
+                <div class="hr-card__status-tag" :class="hr.enabled ? 'is-active' : 'is-inactive'">
+                  {{ hr.enabled ? '在线' : '离线' }}
+                </div>
               </div>
-              <div style="margin-top: 20px;font-size: 16px;lineHeight:2">
-                <div>用户名：{{ hr.name }}</div>
-                <div>手机号码：{{ hr.phone }}</div>
-                <div>电话号码：{{ hr.telephone }}</div>
-                <div>地 址：{{ hr.address }}</div>
-                <div>用户状态：
+              
+              <div class="hr-card__info-list">
+                <div class="info-item">
+                  <i class="el-icon-user"></i>
+                  <span class="info-label">用户名</span>
+                  <span class="info-value">{{ hr.name }}</span>
+                </div>
+                <div class="info-item">
+                  <i class="el-icon-mobile-phone"></i>
+                  <span class="info-label">手机</span>
+                  <span class="info-value">{{ hr.phone }}</span>
+                </div>
+                <div class="info-item">
+                  <i class="el-icon-phone-outline"></i>
+                  <span class="info-label">电话</span>
+                  <span class="info-value">{{ hr.telephone }}</span>
+                </div>
+                <div class="info-item">
+                  <i class="el-icon-location-outline"></i>
+                  <span class="info-label">地址</span>
+                  <span class="info-value">{{ hr.address }}</span>
+                </div>
+                <div class="info-item status-toggle">
+                  <i class="el-icon-turn-off"></i>
+                  <span class="info-label">账号状态</span>
                   <el-switch v-model="hr.enabled"
                              active-color="#13ce66"
                              inactive-color="#ff4949"
+                             size="mini"
                              @change="updatenable(hr)"></el-switch>
                 </div>
-                <div>用户角色：
-                  <el-tag v-for="(role,indexj) in hr.roles"
-                          size="mini"
-                          :key="indexj"
-                          type="success"
-                          effect="dark"
-                          style="margin-right: 5px">
-                    {{ role.namezh }}
-                  </el-tag>
+              </div>
+
+              <div class="hr-card__roles">
+                <div class="roles-header">
+                  <span class="roles-title">用户角色</span>
                   <el-popover @show="showrol(hr)"
                               @after-leave="hiderol(hr)"
-                              title="角色列表"
+                              title="分配角色"
                               width="200"
                               trigger="click">
-                              <template>
                     <el-select v-model="selectroles"
                                multiple
+                               size="mini"
                                :popper-append-to-body="false"
-                               placeholder="请选择">
+                               placeholder="选择角色">
                       <el-option v-for="(item, index) in roles"
                                  :key="index"
                                  :label="item.namezh"
-
                                  :value="item.id">
                       </el-option>
                     </el-select>
-                    </template>
-                    <el-button icon="el-icon-edit"
-                               type="text"
-                               slot="reference"></el-button>
+                    <el-button slot="reference" 
+                               type="text" 
+                               icon="el-icon-edit-outline" 
+                               class="role-edit-btn"></el-button>
                   </el-popover>
                 </div>
-                <div>备注：{{ hr.remark }}</div>
+                <div class="roles-tags">
+                  <el-tag v-for="(role,indexj) in hr.roles"
+                          size="mini"
+                          :key="indexj"
+                          type="primary"
+                          class="role-tag">
+                    {{ role.namezh }}
+                  </el-tag>
+                  <span v-if="!hr.roles || hr.roles.length === 0" class="no-role">暂无角色</span>
+                </div>
+              </div>
+              
+              <div class="hr-card__remark" v-if="hr.remark">
+                <i class="el-icon-notebook-2"></i>
+                <span class="remark-text">{{ hr.remark }}</span>
               </div>
             </div>
-          </el-card>
+          </div>
         </div>
         <el-backtop target=".center-right-infinite-lists .el-scrollbar__wrap  "></el-backtop>
 
@@ -157,6 +189,8 @@ export default {
         telephone: '',
         address: '',
         enabled: false,
+        remark: '',
+        userface: ''
       }
     }
   },
@@ -173,6 +207,8 @@ export default {
         telephone: '',
         address: '',
         enabled: false,
+        remark: '',
+        userface: ''
       }
     },
     doAddHr (){
@@ -250,16 +286,6 @@ export default {
           type: 'warning'
         });
       }
-      //   setTimeout(() => {
-      //     this.$notify.success({
-      //       title: '搜索讯息',
-      //       message: '搜 索 职 位 中...',
-      //       showClose: false,
-      //       offset: 100,
-      //       duration: 1500,
-      //       customClass: 'fontclasssys'
-      //     });
-      //   }, 1000);
       this.getRequest("/system/hr/?name=" + this.name).then(resp => {
         if (resp) {
           /*更新数据+清空列表*/
@@ -308,7 +334,6 @@ export default {
       });
     },
     showrol(hr) {
-      //  this.initroles();
       let roles = hr.roles;
       this.selectroles = [];
       roles.forEach(r => {
@@ -363,53 +388,201 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .fontclasssysuser {
   font-family: 站酷庆科黄油体;
 }
 
 .center-right-infinite-lists {
-  height: 750px;
+  height: calc(100vh - 180px);
   width: 100%;
-}
-
-.el-scrollbar__wrap {
-  overflow-x: hidden;
-}
-
-.img-container {
-  width: 100%;
-  display: flex;
-  /*项目位于容器的中心*/
-  justify-content: center;
-}
-
-.userface-img {
-  width: 72px;
-  height: 72px;
-  border-radius: 72px;
-}
-
-.addPosInput {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  width: 500px;
-}
-
-.hr-container .box-card {
-  width: 300px;
-  height: 450px;
-  margin: 10px;
 }
 
 .hr-container {
   margin-top: 20px;
   display: flex;
-  /*水平排练自动换行*/
   flex-wrap: wrap;
-  /*目位于各行之前、之间、之后都留有空白的容器内。*/
-  justify-content: space-around;
+  justify-content: center;
+  gap: 25px;
+  padding: 0 20px 20px 20px;
+}
+
+/* 现代卡片设计 */
+.hr-card {
+  width: 320px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.hr-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.hr-card__header {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hr-card__title {
+  font-family: 站酷庆科黄油体;
+  font-size: 22px;
+  color: #303133;
+}
+
+.hr-card__delete-btn {
+  color: #f56c6c;
+  padding: 0;
+  font-size: 18px;
+}
+
+.hr-card__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hr-card__avatar-wrapper {
+  position: relative;
+  width: 80px;
+  margin: 0 auto;
+}
+
+.hr-card__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hr-card__status-tag {
+  position: absolute;
+  bottom: 0;
+  right: -5px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.hr-card__status-tag.is-active {
+  background: #67c23a;
+}
+
+.hr-card__status-tag.is-inactive {
+  background: #909399;
+}
+
+.hr-card__info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #606266;
+  gap: 8px;
+}
+
+.info-item i {
+  color: #409eff;
+  width: 16px;
+}
+
+.info-label {
+  color: #909399;
+  width: 60px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.info-value {
+  color: #303133;
+  word-break: break-all;
+}
+
+.status-toggle {
+  margin-top: 4px;
+}
+
+.hr-card__roles {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.roles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.roles-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #909399;
+}
+
+.role-edit-btn {
+  padding: 0;
+  font-size: 16px;
+}
+
+.roles-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.role-tag {
+  border-radius: 4px;
+}
+
+.no-role {
+  font-size: 12px;
+  color: #c0c4cc;
+  font-style: italic;
+}
+
+.hr-card__remark {
+  display: flex;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #ebeef5;
+  font-size: 13px;
+  color: #909399;
+}
+
+.hr-card__remark i {
+  margin-top: 2px;
+}
+
+.remark-text {
+  line-height: 1.4;
+}
+
+.addPosInput {
+  width: 400px;
+}
+
+.el-scrollbar__wrap {
   overflow-x: hidden;
 }
 </style>

@@ -62,22 +62,26 @@
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"
+                                class="table-action-btn"
                                 @click="showEditView(scope.$index, scope.row)">编辑
                         </el-button>
                         <el-button
                                 size="mini"
                                 type="danger"
+                                class="table-action-btn"
                                 @click="handleDelete(scope.$index, scope.row)">删除
                         </el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
-                <el-button @click="deleteMany" type="danger" style="margin-top: 8px"
-                           :disabled="multipleSelection.length==0">批量删除
-                </el-button>
-                <el-button @click="refershMany" type="primary"     style="margin-top: 8px">刷 新
-                </el-button>
+                <div class="sys-batch-btn-container">
+                    <el-button class="sys-action-btn" @click="deleteMany" type="danger"
+                               :disabled="multipleSelection.length==0">批量删除
+                    </el-button>
+                    <el-button class="sys-action-btn" @click="refershMany" type="primary">刷 新
+                    </el-button>
+                </div>
         </div>
         <el-dialog
                 title="修改职位"

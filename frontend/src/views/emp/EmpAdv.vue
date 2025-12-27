@@ -12,7 +12,7 @@
                   @keydown.enter.native="initEmps"
                   :disabled="showAdvanceSearchView"></el-input>
         <el-select v-model="searchValue.politicid"
-                   style="width: 250px;margin-right: 10px"
+                   style="width: 150px;margin-right: 10px"
                    placeholder="政治面貌">
           <el-option v-for="item in politicsstatus"
                      :key="item.id"
@@ -22,7 +22,7 @@
         </el-select>
         <el-select v-model="searchValue.nationid"
                    placeholder="民族"
-                   style="width: 250px;margin-right: 10px">
+                   style="width: 150px;margin-right: 10px">
           <el-option v-for="item in nations"
                      :key="item.id"
                      :label="item.name"
@@ -31,7 +31,7 @@
         </el-select>
         <el-select v-model="searchValue.posid"
                    placeholder="职位"
-                   style="width: 250px;margin-right: 10px">
+                   style="width: 150px;margin-right: 10px">
           <el-option v-for="item in positions"
                      :key="item.id"
                      :label="item.name"
@@ -40,7 +40,7 @@
         </el-select>
         <el-select v-model="searchValue.joblevelid"
                    placeholder="职称"
-                   style="width: 250px;margin-right: 10px">
+                   style="width: 150px;margin-right: 10px">
           <el-option v-for="item in joblevels"
                      :key="item.id"
                      :label="item.name"
@@ -54,10 +54,12 @@
                         range-separator="至"
                         start-placeholder="入职开始日期"
                         end-placeholder="入职结束日期"
-                        style="width: 250px;">
+                        style="width: 320px;"
+                        class="date-range-picker">
         </el-date-picker>
         <el-button icon="el-icon-search"
                    type="primary"
+                   class="search-btn"
                    style="margin-left:10px"
                    @click="initEmps('advanced')">搜索</el-button>
       </div>
@@ -147,7 +149,9 @@
                      @size-change="sizeChange"
                      layout="sizes, prev, pager, next, jumper, ->, total, slot"
                      :total="total"
-                     :page-sizes="[13,33,333,,3333]">
+                     :current-page="page"
+                     :page-size="size"
+                     :page-sizes="[10,30]">
       </el-pagination>
 
     </div>
@@ -185,7 +189,7 @@ export default {
       total: 0,
       page: 1,
       keyword: '',
-      size: 13,
+      size: 10,
       nations: [],
       joblevels: [],
       politicsstatus: [],
@@ -203,9 +207,18 @@ export default {
     }
   },
   mounted () {
+    // 进入本页时禁止主页面（body/html）滚动，避免鼠标上下滚动页面
+    document.documentElement.classList.add('no-page-scroll');
+    document.body.classList.add('no-page-scroll');
+
     this.initEmps();
     this.initData();
     this.initPositions();
+  },
+  beforeDestroy () {
+    // 离开本页时恢复滚动，避免影响其他页面
+    document.documentElement.classList.remove('no-page-scroll');
+    document.body.classList.remove('no-page-scroll');
   },
   methods: {
    

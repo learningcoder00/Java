@@ -52,17 +52,17 @@
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button    size="mini" @click="showEditView(scope.row)">编辑</el-button>
-                        <el-button    size="mini" type="danger" @click="deleteHandler(scope.row)">删除</el-button>
+                        <el-button size="mini" class="table-action-btn" @click="showEditView(scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" class="table-action-btn" @click="deleteHandler(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
-            <div style="display: flex;justify-content: flex-start">
-            <el-button    type="danger" style="margin-top: 10px" :disabled="multipleSelection.length==0"
-                       @click="deleteMany">批量删除
-            </el-button>
-            <el-button    @click="refershMany" type="primary" style="margin-top: 8px">刷 新
-            </el-button>
+            <div class="sys-batch-btn-container">
+                <el-button class="sys-action-btn" type="danger" :disabled="multipleSelection.length==0"
+                           @click="deleteMany">批量删除
+                </el-button>
+                <el-button class="sys-action-btn" @click="refershMany" type="primary">刷 新
+                </el-button>
             </div>
         </div>
         <el-dialog title="修改职称" :visible.sync="dialogVisible" width="30%">

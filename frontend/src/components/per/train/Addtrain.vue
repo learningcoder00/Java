@@ -50,9 +50,10 @@
                              label="电子邮件">
             </el-table-column>
             <el-table-column prop="phone"
-                             width="100"
+                             width="120"
                              align="left"
-                             label="电话号码">
+                             label="电话号码"
+                             :show-overflow-tooltip="true">
             </el-table-column>
             <el-table-column prop="department.name"
                              width="100"
@@ -94,22 +95,22 @@
                              label="合同截止日期">
             </el-table-column>
             <el-table-column align="left"
-                             width="120"
+                             width="90"
                              label="合同期限">
               <template slot-scope="scope">
                 <el-tag size="mini">{{scope.row.contractterm}}</el-tag>
                 年
               </template>
             </el-table-column>
-            <el-table-column align="center">
+            <el-table-column align="center" width="205">
               <template slot="header" slot-scope="scope"
                         >
-                <el-input placeholder="请输入员工名进行搜索"
+                <el-input placeholder="请输入员工名搜索"
                           prefix-icon="el-icon-search"
                           clearable
                           :value="scope"
                           @clear="initEmps"
-                          style="width: 200px;"
+                          style="width: 100%;"
                           v-model="keyword"
                           @keydown.enter.native="initEmps"
                           :disabled="showAdvanceSearchView"></el-input>

@@ -8,16 +8,16 @@
                    height="740px"
                    style="overflow-y: hidden;padding-bottom:30px">
         <el-carousel-item v-for="(item,index) in datas"
-                          style="border-radius: 15px;border: 1px solid #eaeaea; box-shadow: 0 0 25px #EBEEF5;"
+                          style="border-radius: 15px;border: 1px solid #eaeaea; box-shadow: 0 0 25px #EBEEF5;background:#fff;"
                           :key="index">
           <div>
-            <ve-pie :data="item.chartData"
-                    height="700px"
-                    width="800px"
-                    :tooltip-visible="false"
-                    :judge-width="true"
-                    :settings="item.chartSettings"></ve-pie>
-            <div style="display:felx;;color:#000000;text-align: center;font-size:35px;font-family: 站酷庆科黄油体"> {{item.title}}</div>
+            <BeautifulPie
+              :title="item.title"
+              :rows="item.chartData.rows"
+              :rose="item.rose"
+              :label-top-n="item.labelTopN"
+            />
+            <div class="sta-title">{{ item.title }}</div>
           </div>
 
         </el-carousel-item>
@@ -29,20 +29,19 @@
 
 
 <script>
+import BeautifulPie from '@/components/charts/BeautifulPie.vue'
+
 export default {
   name: "StaPers",
+  components: { BeautifulPie },
   data () {
     return {
       loading: false,
       datas: [
         {
           title: "职位分布",
-          chartSettings: {
-            radius: 200,
-            offsetY: 350,
-
-          },
-
+          rose: false,
+          labelTopN: 8,
           chartData: {
             columns: [],
             rows: []
@@ -50,11 +49,8 @@ export default {
         },
         {
           title: "职称分布",
-          chartSettings: {
-            roseType: 'radius',
-            radius: 200,
-            offsetY: 350,
-          },
+          rose: true,
+          labelTopN: 8,
           chartData: {
             columns: [],
             rows: []
@@ -62,10 +58,8 @@ export default {
         },
         {
           title: "部门员工分布",
-          chartSettings: {
-            radius: 200,
-            offsetY: 350,
-          },
+          rose: false,
+          labelTopN: 10,
           chartData: {
             columns: [],
             rows: [
@@ -75,12 +69,8 @@ export default {
         },
         {
           title: "学历分布",
-          chartSettings: {
-            roseType: 'radius',
-            radius: 200,
-            offsetY: 350,
-             label: { show: true, position: "top" },
-          },
+          rose: false,
+          labelTopN: 6,
           chartData: {
             columns: [],
             rows: []
@@ -88,35 +78,17 @@ export default {
         },
         {
           title: "所在高校分布",
-          chartSettings: {
-            roseType: 'radius',
-            radius: 200,
-            offsetY: 350,
-             label: { show: true,position: "top" },
-          },
+          rose: true,
+          labelTopN: 6,
           chartData: {
             columns: [],
             rows: []
           }
         },
         {
-          // title: "民族分布",
-          // chartSettings: {
-          //   radius: 200,
-          //   offsetY: 350,
-          // },
-          // chartData: {
-          //   columns: ["name", "sum"],
-          //   rows: []
-          // }
-        },
-        {
           title: "党派分布",
-          chartSettings: {
-            roseType: 'radius',
-            radius: 200,
-            offsetY: 350,
-          },
+          rose: false,
+          labelTopN: 8,
           chartData: {
             columns: ["name", "sum"],
             rows: []
@@ -133,7 +105,6 @@ export default {
     this.initdep();
     this.inittip();
     this.initsch();
-    this.initnation();
     this.initpins();
   },
   methods: {
@@ -200,8 +171,8 @@ export default {
     initpins () {
       this.getRequest("/statistics/personnel/politicsstatus").then(resp => {
         if (resp) {
-          this.datas[6].chartData.columns = ["name", "sum"];
-          this.datas[6].chartData.rows = resp;
+          this.datas[5].chartData.columns = ["name", "sum"];
+          this.datas[5].chartData.rows = resp;
           this.loading = false;
         }
       });
@@ -214,6 +185,15 @@ export default {
 .fontclass {
   font-size: 35px;
   font-family: 站酷庆科黄油体;
+}
+.sta-title {
+  color: #000000;
+  text-align: center;
+  font-size: 35px;
+  font-family: 站酷庆科黄油体;
+  line-height: 1.2;
+  margin-top: 18px;
+  padding-bottom: 12px;
 }
 .el-carousel__item div {
   color: #475669;
