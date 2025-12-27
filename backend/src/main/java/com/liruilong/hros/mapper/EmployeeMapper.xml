@@ -815,108 +815,99 @@
     </select>
     <select id="getAllsEmpadvanced" resultMap="AdvancedResultMap">
         SELECT
-        e.*,
-        p.`id` AS pid,
-        p.`name` AS pname,
-        n.`id` AS nid,
-        n.`name` AS nname,
-        d.`id` AS did,
-        d.`name` AS dname,
-        j.`id` AS jid,
-        j.`name` AS jname,
-        pos.`id` AS posid,
-        pos.`name` AS posname,
-        s.`id` AS sid,
-        s.`accumulationFundBase` AS saccumulationFundBase,
-        s.`accumulationFundPer` AS saccumulationFundPer,
-        s.`allSalary` AS sallSalary,
-        s.`basicSalary` AS sbasicSalary,
-        s.`bonus` AS sbonus,
-        s.`createDate` AS screateDate,
-        s.`lunchSalary` AS slunchSalary,
-        s.`medicalBase` AS smedicalBase,
-        s.`medicalPer` AS smedicalPer,
-        s.`name` AS sname,
-        s.`pensionBase` AS spensionBase,
-        s.`pensionPer` AS spensionPer,
-        s.`trafficSalary` AS strafficSalary,
-        et.trainstartDate,
-        et.trainfinishDate,
-        et.trainContent,
-        et.trainstatus,
-        a.appDate,
-        a.appResult,
-        a.appContent
+            e.*,
+            p.`id` AS pid,
+            p.`name` AS pname,
+            n.`id` AS nid,
+            n.`name` AS nname,
+            d.`id` AS did,
+            d.`name` AS dname,
+            j.`id` AS jid,
+            j.`name` AS jname,
+            pos.`id` AS posid,
+            pos.`name` AS posname,
+            s.`id` AS sid,
+            s.`accumulationFundBase` AS saccumulationFundBase,
+            s.`accumulationFundPer` AS saccumulationFundPer,
+            s.`allSalary` AS sallSalary,
+            s.`basicSalary` AS sbasicSalary,
+            s.`bonus` AS sbonus,
+            s.`createDate` AS screateDate,
+            s.`lunchSalary` AS slunchSalary,
+            s.`medicalBase` AS smedicalBase,
+            s.`medicalPer` AS smedicalPer,
+            s.`name` AS sname,
+            s.`pensionBase` AS spensionBase,
+            s.`pensionPer` AS spensionPer,
+            s.`trafficSalary` AS strafficSalary,
+            et.trainstartDate,
+            et.trainfinishDate,
+            et.trainContent,
+            et.trainstatus,
+            a.id AS aid,
+            a.eid AS eid,
+            a.appDate,
+            a.appResult,
+            a.appContent,
+            a.remark
         FROM
-        employee e
-        LEFT JOIN empsalary es ON e.`id` = es.`eid`
-        LEFT JOIN salary s ON es.`sid` = s.`id`
-        LEFT JOIN employeetrain et ON e.id = et.eid
-        LEFT JOIN appraise a ON e.id = a.eid,
-        nation n,
-        politicsstatus p,
-        department d,
-        joblevel j,
-        position pos
-
+            (
+                SELECT e.id
+                FROM employee e
+                WHERE 1=1
+                <if test="emp != null">
+                    <if test="emp.name !=null and emp.name!=''">
+                        and e.name like concat('%',#{emp.name},'%')
+                    </if>
+                    <if test="emp.politicid !=null">
+                        and e.politicId =#{emp.politicid}
+                    </if>
+                    <if test="emp.nationid !=null">
+                        and e.nationId =#{emp.nationid}
+                    </if>
+                    <if test="emp.joblevelid !=null">
+                        and e.jobLevelId =#{emp.joblevelid}
+                    </if>
+                    <if test="emp.departmentid !=null">
+                        and e.departmentId =#{emp.departmentid}
+                    </if>
+                    <if test="emp.engageform !=null and emp.engageform!=''">
+                        and e.engageForm =#{emp.engageform}
+                    </if>
+                    <if test="emp.posid !=null">
+                        and e.posId =#{emp.posid}
+                    </if>
+                </if>
+                <if test="beginDateScope !=null">
+                    and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+                </if>
+                order by e.workID DESC
+                <if test="page !=null and size!=null">
+                    limit #{page},#{size}
+                </if>
+            ) t
+            INNER JOIN employee e ON e.id = t.id
+            LEFT JOIN empsalary es ON e.`id` = es.`eid`
+            LEFT JOIN salary s ON es.`sid` = s.`id`
+            LEFT JOIN employeetrain et ON e.id = et.eid
+            LEFT JOIN appraise a ON e.id = a.eid,
+            nation n,
+            politicsstatus p,
+            department d,
+            joblevel j,
+            position pos
         WHERE
-        e.`nationId` = n.`id`
-        AND e.`politicId` = p.`id`
-        AND e.`departmentId` = d.`id`
-        AND e.`jobLevelId` = j.`id`
-        AND e.`posId` = pos.`id`
-        <if test="emp != null">
-            <if test="emp.name !=null and emp.name!=''">
-                and e.name like concat('%',#{emp.name},'%')
-            </if>
-            <if test="emp.politicid !=null">
-                and e.politicId =#{emp.politicid}
-            </if>
-            <if test="emp.nationid !=null">
-                and e.nationId =#{emp.nationid}
-            </if>
-            <if test="emp.joblevelid !=null">
-                and e.jobLevelId =#{emp.joblevelid}
-            </if>
-            <if test="emp.departmentid !=null">
-                and e.departmentId =#{emp.departmentid}
-            </if>
-            <if test="emp.engageform !=null and emp.engageform!=''">
-                and e.engageForm =#{emp.engageform}
-            </if>
-            <if test="emp.posid !=null">
-                and e.posId =#{emp.posid}
-            </if>
-        </if>
-        <if test="beginDateScope !=null">
-            and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
-        </if>
+            e.`nationId` = n.`id`
+            AND e.`politicId` = p.`id`
+            AND e.`departmentId` = d.`id`
+            AND e.`jobLevelId` = j.`id`
+            AND e.`posId` = pos.`id`
         order by e.workID DESC
-        <if test="page !=null and size!=null">
-            limit #{page},#{size}
-        </if>
     </select>
     <select id="getTotalE" resultType="java.lang.Long">
-        SELECT
-        COUNT(*)
-        FROM
-        employee e
-        LEFT JOIN empsalary es ON e.`id` = es.`eid`
-        LEFT JOIN salary s ON es.`sid` = s.`id`
-        LEFT JOIN employeetrain et ON e.id = et.eid
-        LEFT JOIN appraise a ON e.id = a.eid,
-        nation n,
-        politicsstatus p,
-        department d,
-        joblevel j,
-        position pos
-
-        WHERE
-        e.`nationId` = n.`id`
-        AND e.`politicId` = p.`id`
-        AND e.`departmentId` = d.`id`
-        AND e.`jobLevelId` = j.`id`
-        AND e.`posId` = pos.`id`
+        SELECT COUNT(*)
+        FROM employee e
+        WHERE 1=1
         <if test="emp != null">
             <if test="emp.name !=null and emp.name!=''">
                 and e.name like concat('%',#{emp.name},'%')
@@ -943,7 +934,6 @@
         <if test="beginDateScope !=null">
             and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
         </if>
-        order by e.workID DESC
     </select>
     <select id="getEmployeeAll" resultMap="BaseResultMap">
         SELECT
