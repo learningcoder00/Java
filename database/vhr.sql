@@ -3171,6 +3171,7 @@ INSERT INTO `menu` VALUES (15, '/salary/sobcfg/**', '/sal/sobcfg', 'SalSobCfg', 
 INSERT INTO `menu` VALUES (16, '/salary/table/**', '/sal/table', 'SalTable', '工资表管理', 'fa fa-indent', NULL, 1, 4, 1);
 INSERT INTO `menu` VALUES (17, '/salary/month/**', '/sal/month', 'SalMonth', '月末处理', 'fa fa-google-wallet', NULL, 1, 4, 1);
 INSERT INTO `menu` VALUES (19, '/statistics/all/**', '/sta/all', 'StaAll', '综合信息统计', 'fa fa-area-chart', NULL, 1, 5, 1);
+INSERT INTO `menu` VALUES (20, '/statistics/points/**', '/sta/points', 'StaPoints', '员工积分统计', 'fa fa-trophy', NULL, 1, 5, 0);
 INSERT INTO `menu` VALUES (21, '/statistics/personnel/**', '/sta/pers', 'StaPers', '人事信息分析', 'fa fa-pie-chart', NULL, 1, 5, 1);
 INSERT INTO `menu` VALUES (22, '/statistics/recored/**', '/sta/record', 'StaRecord', '人事记录分析', 'fa fa-bar-chart', NULL, 1, 5, 1);
 INSERT INTO `menu` VALUES (23, '/system/basic/**', '/sys/basic', 'SysBasic', '基础信息设置', 'fa fa-stack-overflow', NULL, 1, 6, 1);
@@ -3210,7 +3211,7 @@ INSERT INTO `menu_role` VALUES (563, 15, 4);
 INSERT INTO `menu_role` VALUES (564, 16, 4);
 INSERT INTO `menu_role` VALUES (565, 17, 4);
 INSERT INTO `menu_role` VALUES (567, 19, 4);
-INSERT INTO `menu_role` VALUES (568, 20, 4);
+
 INSERT INTO `menu_role` VALUES (569, 21, 4);
 INSERT INTO `menu_role` VALUES (570, 22, 4);
 INSERT INTO `menu_role` VALUES (571, 23, 4);
@@ -3231,7 +3232,7 @@ INSERT INTO `menu_role` VALUES (629, 15, 14);
 INSERT INTO `menu_role` VALUES (630, 16, 14);
 INSERT INTO `menu_role` VALUES (631, 17, 14);
 INSERT INTO `menu_role` VALUES (633, 19, 14);
-INSERT INTO `menu_role` VALUES (634, 20, 14);
+
 INSERT INTO `menu_role` VALUES (635, 21, 14);
 INSERT INTO `menu_role` VALUES (636, 22, 14);
 INSERT INTO `menu_role` VALUES (637, 23, 14);
@@ -3248,7 +3249,7 @@ INSERT INTO `menu_role` VALUES (757, 13, 6);
 INSERT INTO `menu_role` VALUES (758, 14, 6);
 INSERT INTO `menu_role` VALUES (759, 15, 6);
 INSERT INTO `menu_role` VALUES (760, 16, 6);
-INSERT INTO `menu_role` VALUES (761, 20, 6);
+
 INSERT INTO `menu_role` VALUES (762, 21, 6);
 INSERT INTO `menu_role` VALUES (763, 22, 6);
 INSERT INTO `menu_role` VALUES (764, 23, 6);
@@ -3260,7 +3261,7 @@ INSERT INTO `menu_role` VALUES (769, 8, 1);
 INSERT INTO `menu_role` VALUES (770, 10, 1);
 INSERT INTO `menu_role` VALUES (771, 11, 1);
 INSERT INTO `menu_role` VALUES (772, 13, 1);
-INSERT INTO `menu_role` VALUES (773, 20, 1);
+
 INSERT INTO `menu_role` VALUES (774, 21, 1);
 INSERT INTO `menu_role` VALUES (775, 22, 1);
 INSERT INTO `menu_role` VALUES (776, 7, 2);
@@ -3269,13 +3270,13 @@ INSERT INTO `menu_role` VALUES (778, 14, 2);
 INSERT INTO `menu_role` VALUES (779, 15, 2);
 INSERT INTO `menu_role` VALUES (780, 16, 2);
 INSERT INTO `menu_role` VALUES (781, 19, 2);
-INSERT INTO `menu_role` VALUES (782, 20, 2);
+
 INSERT INTO `menu_role` VALUES (783, 21, 2);
 INSERT INTO `menu_role` VALUES (784, 22, 2);
 INSERT INTO `menu_role` VALUES (785, 7, 3);
 INSERT INTO `menu_role` VALUES (786, 8, 3);
 INSERT INTO `menu_role` VALUES (787, 13, 3);
-INSERT INTO `menu_role` VALUES (788, 20, 3);
+
 INSERT INTO `menu_role` VALUES (789, 21, 3);
 INSERT INTO `menu_role` VALUES (790, 22, 3);
 
@@ -3641,3 +3642,6 @@ end
 delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE hr ADD COLUMN employee_id INT(11) DEFAULT NULL COMMENT '员工Id';
+ALTER TABLE hr ADD COLUMN work_date TEXT;
