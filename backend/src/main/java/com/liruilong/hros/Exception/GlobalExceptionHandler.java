@@ -19,6 +19,24 @@ import java.util.logging.Logger;
 public class GlobalExceptionHandler {
 
     Logger logger = Logger.getLogger("GlobalExceptionHandler");
+
+    /**
+     * 业务运行时异常：直接把 message 返回给前端，避免前端只看到“未知错误”
+     */
+    @ExceptionHandler(RuntimeException.class)
+    public RespBean runtimeException(RuntimeException e) {
+        logger.warning("RuntimeException: " + e.getMessage());
+        return RespBean.error(e.getMessage() == null ? "系统异常,操作失败" : e.getMessage());
+    }
+
+    /**
+     * 兜底异常：避免 500 无提示
+     */
+    @ExceptionHandler(Exception.class)
+    public RespBean exception(Exception e) {
+        logger.warning("Exception: " + e.getMessage());
+        return RespBean.error("系统异常,操作失败");
+    }
     @ExceptionHandler(SQLException.class)
     public RespBean sqlException(SQLException e) {
         // 处理唯一约束、外键等完整性异常

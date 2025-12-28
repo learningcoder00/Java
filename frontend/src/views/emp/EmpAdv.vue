@@ -151,7 +151,7 @@
                      :total="total"
                      :current-page="page"
                      :page-size="size"
-                     :page-sizes="[10,30]">
+                     :page-sizes="[11, 33]">
       </el-pagination>
 
     </div>
@@ -189,7 +189,7 @@ export default {
       total: 0,
       page: 1,
       keyword: '',
-      size: 10,
+      size: 11,
       nations: [],
       joblevels: [],
       politicsstatus: [],

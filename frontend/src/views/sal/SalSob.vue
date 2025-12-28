@@ -76,106 +76,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-dialog title="套账修改"
-                 :visible.sync="updatedialogVisible"
-                 width="70%"
-                 size="mini"
-                 :before-close="handleClose">
-
-        <el-form ref="empform"
-                 :model="salary"
-                 label-width="120px"
-                 size="120"
-                 :rules="rules">
-          <el-row :gutter="10">
-            <el-col :span="6">
-              <el-form-item prop="name"
-                            label="账套名称">
-                <el-input v-model="salary.name"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item prop="basicsalary"
-                            label="基本工资">
-                <el-input v-model.number="salary.basicsalary"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item prop="trafficsalary"
-                            label="交通补助">
-                <el-input v-model.number="salary.trafficsalary"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="6">
-              <el-form-item prop="lunchsalary"
-                            label="午餐补助">
-                <el-input v-model.number="salary.lunchsalary"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item prop="bonus"
-                            label="奖金">
-                <el-input v-model.number="salary.bonus"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item prop="accumulationfundbase"
-                            label="公积金基数">
-                <el-input v-model.number="salary.accumulationfundbase"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="6">
-              <el-form-item prop="pensionper"
-                            label="养老金比率">
-                <el-input v-model="salary.pensionper"></el-input>
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="6">
-              <el-form-item prop="medicalper"
-                            label="医疗保险比率">
-                <el-input v-model="salary.medicalper"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item prop="medicalbase"
-                            label="医疗保险基数">
-                <el-input v-model.number="salary.medicalbase"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="6">
-              <el-form-item prop="pensionbase"
-                            label="养老金基数">
-                <el-input v-model.number="salary.pensionbase"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item prop="accumulationfundper"
-                            label="公积金比率">
-                <el-input v-model="salary.accumulationfundper"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-            </el-col>
-            <el-col :span="6">
-              <el-button @click="updatedialogVisible = false"
-                         style="margin-left: 120px">取 消</el-button>
-              <el-button type="primary"
-                         @click="updatestep">确 定</el-button>
-            </el-col>
-          </el-row>
-        </el-form>
-        <span slot="footer"
-              class="dialog-footer">
-
-        </span>
-      </el-dialog>
     </div>
     <el-dialog :title="dialogTitle"
                :visible.sync="dialogVisible"
@@ -187,18 +87,20 @@
                    v-for="(itemName,index) in salaryItemName"
                    :key="index"></el-step>
         </el-steps>
-        <el-input v-model="salary[title]"
-                  :placeholder="'请输入'+salaryItemName[index]+'...'"
-                  v-for="(value,title,index) in salary"
-                  :key="index"
-                  v-show="activeItemIndex==index"
-                  style="width: 200px"></el-input>
+        <div v-for="(key, index) in salaryItemKey" :key="index">
+          <el-input v-model="salary[key]"
+                    :placeholder="'请输入'+salaryItemName[index]+'...'"
+                    v-show="activeItemIndex==index"
+                    style="width: 200px"></el-input>
+        </div>
       </div>
       <span slot="footer"
             class="dialog-footer">
-        <el-button @click="preStep">{{activeItemIndex==11?'取消':'上一步'}}</el-button>
-        <el-button type="primary"
-                   @click="nextStep">{{activeItemIndex==11?'完成':'下一步'}}</el-button>
+        <el-button class="sys-action-btn"
+                   @click="preStep">{{ activeItemIndex == 11 ? '取消' : '上一步' }}</el-button>
+        <el-button class="sys-action-btn"
+                   type="primary"
+                   @click="nextStep">{{ activeItemIndex == 11 ? '完成' : '下一步' }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -223,12 +125,23 @@ export default {
         name: [{ required: true, message: '不能为空', trigger: 'blur' }],
       },
       dialogVisible: false,
-      tempsalary: [],
       loading: false,
-      updatedialogVisible: false,
       dialogTitle: '添加工资账套',
       salaries: [],
       activeItemIndex: 0,
+      salaryItemKey: [
+        'basicsalary',
+        'trafficsalary',
+        'lunchsalary',
+        'bonus',
+        'pensionper',
+        'pensionbase',
+        'medicalper',
+        'medicalbase',
+        'accumulationfundper',
+        'accumulationfundbase',
+        'name'
+      ],
       salaryItemName: [
         '基本工资',
         '交通补助',
@@ -263,20 +176,9 @@ export default {
   methods: {
     showEditSalaryView (data) {
       this.dialogTitle = '修改工资账套';
-      this.updatedialogVisible = true;
-      this.salary.basicsalary = data.basicsalary;
-      this.salary.trafficsalary = data.trafficsalary;
-      this.salary.lunchsalary = data.lunchsalary;
-      this.salary.bonus = data.bonus;
-      this.salary.pensionper = data.pensionper;
-      this.salary.pensionbase = data.pensionbase;
-      this.salary.medicalper = data.medicalper;
-      this.salary.medicalbase = data.medicalbase;
-      this.salary.accumulationfundper = data.accumulationfundper;
-      this.salary.accumulationfundbase = data.accumulationfundbase;
-      this.salary.name = data.name;
-      this.salary.id = data.id;
-      this.tempsalary = this.salary;
+      this.activeItemIndex = 0;
+      this.salary = Object.assign({}, data);
+      this.dialogVisible = true;
     },
     deleteSalary (data) {
       this.$confirm('此操作将删除【' + data.name + '】账套，是否继续？', '提示', {
@@ -308,35 +210,6 @@ export default {
         return;
       }
       this.activeItemIndex--;
-    },
-    updatestep () {
-      this.$refs['empform'].validate((valid) => {
-        if (valid) {
-          this.$notify.success({
-            title: '修改讯息',
-            message: ' 修 改 套 账 中...',
-            showClose: false,
-            offset: 100,
-            duration: 1500,
-            customClass: 'fontclass'
-          });
-          this.putRequest("/salary/sob/", this.salary).then(resp => {
-            if (resp) {
-              this.initSalaries();
-              this.updatedialogVisible = false;
-            }
-          });
-        } else {
-          this.$notify.info({
-            title: '删除讯息',
-            message: '以 取 消 删 除 ',
-            showClose: false,
-            offset: 100,
-            duration: 1500,
-            customClass: 'fontclass'
-          });
-        }
-      });
     },
     nextStep () {
       if (this.activeItemIndex == 11) {

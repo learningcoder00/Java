@@ -1015,7 +1015,7 @@
                 #{contractterm,jdbcType=DOUBLE}, #{conversiontime,jdbcType=DATE}, #{notworkdate,jdbcType=DATE},
                 #{begincontract,jdbcType=DATE}, #{endcontract,jdbcType=DATE}, #{workage,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.liruilong.hros.model.Employee">
+    <insert id="insertSelective" parameterType="com.liruilong.hros.model.Employee" useGeneratedKeys="true" keyProperty="id">
         insert into employee
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

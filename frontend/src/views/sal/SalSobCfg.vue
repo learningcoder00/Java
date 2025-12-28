@@ -174,7 +174,9 @@
                      @size-change="sizeChange"
                      layout="sizes, prev, pager, next, jumper, ->, total, slot"
                      :total="total"
-                     :page-sizes="[13,33,333,,3333]">
+                     :current-page="page"
+                     :page-size="size"
+                     :page-sizes="[11, 22, 33, 55]">
       </el-pagination>
     </div>
 
@@ -188,8 +190,8 @@ export default {
     return {
       emps: [],
       total: 0,
-      loading:false,
-      size: 15,
+      loading: false,
+      size: 11,
       page: 1,
       currentSalary: null,
       salaries: [],

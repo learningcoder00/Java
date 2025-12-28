@@ -19,7 +19,7 @@
         select
         <include refid="Base_Column_List"/>
         from role
-        where namezh = #{namezh,jdbcType=INTEGER}
+        where nameZh = #{namezh,jdbcType=VARCHAR}
     </select>
     <select id="getAllRoles" resultMap="BaseResultMap">
       select

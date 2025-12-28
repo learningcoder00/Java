@@ -94,41 +94,83 @@ public class EmployeeService {
 
     @Transactional
     public Integer addEmp(Employee employee) {
+        // 检查合同日期是否为空
         Date beginContract = employee.getBegincontract();
         Date endContract = employee.getEndcontract();
+        if (beginContract == null || endContract == null) {
+            throw new RuntimeException("合同起始日期和终止日期不能为空");
+        }
+        
+        // 计算合同期限
         double month = (Double.parseDouble(yearFormat.format(endContract)) - Double.parseDouble(yearFormat.format(beginContract))) * 12 + (Double.parseDouble(monthFormat.format(endContract)) - Double.parseDouble(monthFormat.format(beginContract)));
         employee.setContractterm(Double.parseDouble(decimalFormat.format(month / 12)));
+        
+        // 插入员工信息
         int result = employeeMapper.insertSelective(employee);
-        Employee employeeByName = employeeMapper.getEmployeeByName(employee.getName());
-        if (employeeByName == null){
-            throw new RuntimeException("新增员工失败");
+        if (result != 1) {
+            throw new RuntimeException("新增员工失败：插入数据库失败");
         }
+        
+        // 检查是否成功获取生成的ID
+        if (employee.getId() == null) {
+            throw new RuntimeException("新增员工失败：未能获取员工ID");
+        }
+        
+        // 通过ID查询员工信息（更可靠的方式）
+        Employee employeeById = employeeMapper.getEmployeeById(employee.getId());
+        if (employeeById == null) {
+            throw new RuntimeException("新增员工失败：无法查询到刚插入的员工信息");
+        }
+        
+        // 创建HR账号
         Hr hr = new Hr();
-        if (StringUtils.isNoneBlank(employeeByName.getAddress())){
-            hr.setAddress(employeeByName.getAddress());
+        if (StringUtils.isNoneBlank(employeeById.getAddress())){
+            hr.setAddress(employeeById.getAddress());
         }
-        if (StringUtils.isNoneBlank(employeeByName.getName())){
-            hr.setName(employeeByName.getName());
-            hr.setUsername(employeeByName.getName());
+        if (StringUtils.isNoneBlank(employeeById.getName())){
+            hr.setName(employeeById.getName());
+            hr.setUsername(employeeById.getName());
         }
-        if (StringUtils.isNoneBlank(employeeByName.getPhone())){
-            hr.setPhone(employeeByName.getPhone());
-            hr.setTelephone(employeeByName.getPhone());
+        if (StringUtils.isNoneBlank(employeeById.getPhone())){
+            hr.setPhone(employeeById.getPhone());
+            hr.setTelephone(employeeById.getPhone());
         }
         hr.setPassword("$2a$10$ySG2lkvjFHY5O0./CPIE1OI8VJsuKYEzOYzqIa7AJR6sEgSzUFOAm");
-        if (StringUtils.isBlank(hr.getUserface())){
-            hr.setUserface("https://imgsa.baidu.com/forum/pic/item/a832bc315c6034a8df786e5ac31349540823766e.jpg");
-        }
+        // 设置默认头像
+        hr.setUserface("https://imgsa.baidu.com/forum/pic/item/a832bc315c6034a8df786e5ac31349540823766e.jpg");
         hr.setEnabled(true);
-        hr.setEmployeeId(employeeByName.getId());
-        hrMapper.insert(hr);
-        Hr addHr = hrMapper.loadUserByEmployeeId(employeeByName.getId());
-        Role role = roleMapper.selectByName("员工角色");
-        if (role == null){
-            throw new RuntimeException("应先创建员工角色");
+        hr.setEmployeeId(employeeById.getId());
+        
+        // 插入HR账号
+        int hrResult = hrMapper.insert(hr);
+        if (hrResult != 1) {
+            throw new RuntimeException("新增员工失败：创建HR账号失败");
         }
+        
+        // 查询刚插入的HR账号
+        Hr addHr = hrMapper.loadUserByEmployeeId(employeeById.getId());
+        if (addHr == null) {
+            throw new RuntimeException("新增员工失败：无法查询到刚创建的HR账号");
+        }
+        
+        // 角色分配：优先使用“员工角色”（如果你们库里创建了），否则使用“人事专员”
+        // 注意：RoleMapper.selectByName 按 nameZh(中文名) 查询
+        Role role = roleMapper.selectByName("员工角色");
+        if (role == null) {
+            role = roleMapper.selectByName("人事专员");
+        }
+        if (role == null) {
+            // 如果都不存在，明确报错（避免前端显示“未知错误”）
+            throw new RuntimeException("新增员工失败：缺少默认角色（请先在【系统管理-角色管理】创建“员工角色”或“人事专员”）");
+        }
+        
+        // 分配角色
         hrRoleMapper.addHrRole(addHr.getId(), new Integer[]{role.getId()});
+        
+        // 记录操作日志
         oplogService.addOpLog(new OpLog((byte) 2, new Date(), "员工入职::name:" + employee.getName() + "workId:" + employee.getWorkid(), Hruitls.getCurrent().getName()));
+        
+        // 发送邮件
         EmailUtils.sendEmail(new EmailModel(employee, "人事管理系统测试##员工入职","emailpy.py"));
 //        mailReceiver.handler(employee);
         return result;
