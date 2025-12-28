@@ -31,7 +31,7 @@ public class SobConfigController {
     @PutMapping("/")
     public RespBean updateEmployeeSalaryById(Integer eid, Integer sid) {
         Integer result = employeeService.updateEmployeeSalaryById(eid, sid);
-        if (result == 1 || result == 2) {
+        if (result != null && result > 0) {
             return RespBean.ok("更新成功");
         }
         return RespBean.error("更新失败");

@@ -41,6 +41,8 @@ public interface EmployeeMapper {
 
     Integer updateEmployeeSalaryById(@Param("eid") Integer eid, @Param("sid") Integer sid);
 
+    Integer insertEmployeeSalary(@Param("eid") Integer eid, @Param("sid") Integer sid);
+
     List<DataModel> dataViewPosition();
 
     List<DataModel> dataViewJobLevel();

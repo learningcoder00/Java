@@ -378,7 +378,16 @@
                 limit #{page},#{size}
             </if>
         ) e 
-        LEFT JOIN empsalary es ON e.`id`=es.`eid` 
+        <!-- 防止 empsalary 历史数据重复导致员工列表重复/展示旧账套：只取每个员工最新一条 empsalary 记录 -->
+        LEFT JOIN (
+            SELECT es1.*
+            FROM empsalary es1
+            INNER JOIN (
+                SELECT eid, MAX(id) AS maxId
+                FROM empsalary
+                GROUP BY eid
+            ) t ON t.eid = es1.eid AND t.maxId = es1.id
+        ) es ON e.`id` = es.`eid`
         LEFT JOIN salary s ON es.`sid`=s.`id` 
         LEFT JOIN department d ON e.`departmentId`=d.`id` 
         LEFT JOIN joblevel j ON e.`jobLevelId`=j.`id` 
@@ -1190,12 +1199,20 @@
             </if>
         </trim>
     </insert>
-    <insert id="updateEmployeeSalaryById">
-        REPLACE
-        INTO empsalary (eid,sid) VALUES(
-        #{eid},
-        #{sid}
-        )
+    <!--
+        注意：empsalary 表的主键是自增 id，eid 不是唯一键。
+        使用 REPLACE INTO 在没有唯一约束时不会“替换”，只会不断插入新记录，导致修改后仍展示旧账套。
+        这里改为：按 eid 进行 UPDATE；如果 UPDATE 影响行数为 0，由 service 再执行 INSERT。
+     -->
+    <update id="updateEmployeeSalaryById">
+        UPDATE empsalary
+        SET sid = #{sid}
+        WHERE eid = #{eid}
+    </update>
+
+    <insert id="insertEmployeeSalary">
+        INSERT INTO empsalary (eid, sid)
+        VALUES (#{eid}, #{sid})
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.liruilong.hros.model.Employee">
         update employee

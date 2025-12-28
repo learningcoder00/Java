@@ -239,7 +239,20 @@ public class EmployeeService {
 
     public Integer updateEmployeeSalaryById(Integer eid, Integer sid) {
         oplogService.addOpLog(new OpLog((byte) 7, new Date(), "员工套账变动:workId:" + eid + "套账编号:" + sid, Hruitls.getCurrent().getName()));
-        return employeeMapper.updateEmployeeSalaryById(eid, sid);
+        if (eid == null || sid == null) {
+            return 0;
+        }
+        // 先按 eid 更新；如果历史存在重复记录会一次性更新多行，这里统一视为“更新成功”
+        Integer updated = employeeMapper.updateEmployeeSalaryById(eid, sid);
+        if (updated != null && updated > 0) {
+            return 1;
+        }
+        // 首次设置：empsalary 中不存在该员工记录时插入
+        Integer inserted = employeeMapper.insertEmployeeSalary(eid, sid);
+        if (inserted != null && inserted > 0) {
+            return 2;
+        }
+        return 0;
     }
 
     public List<DataModel> dataViewPosition() {
