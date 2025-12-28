@@ -749,6 +749,9 @@ body.no-page-scroll {
 .el-menu-horizontal .el-menu-item,
 .el-menu-horizontal .el-submenu__title {
   background-color: transparent !important;
+  /* 让顶部菜单更紧凑，避免下拉弹层跟随触发项变得过宽 */
+  padding-left: 20px !important;
+  padding-right: 20px !important;
 }
 
 .el-menu-horizontal .el-menu-item:hover,
@@ -769,14 +772,18 @@ body.no-page-scroll {
   background-color: transparent !important;
 }
 
-/* 下拉菜单宽度与父菜单项一致 */
+/* 顶部水平菜单的下拉弹层：固定宽度（不随内容变化） */
 .el-menu--horizontal .el-menu--popup {
-  min-width: 0 !important;
-  width: auto !important;
+  min-width: 0 !important;        /* 覆盖 ElementUI 行内 min-width（通常=触发项宽度） */
+  width: 160px !important;
 }
 
 .el-menu--horizontal .el-menu--popup .el-menu-item {
-  min-width: 0 !important;
+  width: 100%;
+  min-width: 0;
   white-space: nowrap;
   padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -372,30 +372,19 @@ export default {
   background-color: transparent !important;
 }
 
-/* 下拉菜单宽度与父菜单项一致 */
-.el-menu--horizontal .el-menu {
-  min-width: auto !important;
-}
-
+/* 顶部水平菜单的下拉弹层：固定宽度（不随内容变化） */
 .el-menu--horizontal .el-menu--popup {
   min-width: 0 !important;
-  width: auto !important;
+  width: 138px !important;
 }
 
 .el-menu--horizontal .el-menu--popup .el-menu-item {
-  min-width: 0 !important;
+  width: 100%;
+  min-width: 0;
   white-space: nowrap;
   padding: 0 20px;
-}
-
-/* 确保下拉菜单宽度与父菜单项标题宽度一致 */
-.el-menu--horizontal .el-submenu .el-menu {
-  min-width: 0 !important;
-}
-
-/* 下拉菜单容器宽度 */
-.el-menu--horizontal .el-submenu .el-menu--popup {
-  min-width: 0 !important;
-  width: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
