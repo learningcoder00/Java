@@ -12,11 +12,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description :
 
- * @Date: 2019/12/31 11:19
- */
 
 @RestController
 @RequestMapping("/employee/basic")
@@ -114,13 +110,7 @@ public class EmpBasicController {
         return respBean;
     }
 
-    /**
-     * @return org.springframework.http.ResponseEntity<byte [ ]>
-     * @Author liruilong
-     * @Description 文件下载
-     * @Date 19:04 2020/1/1
-     * @Param []
-     **/
+    // 文件下载
 
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportData() {
@@ -129,13 +119,7 @@ public class EmpBasicController {
     }
 
 
-    /**
-     * @Author liruilong
-     * @Description 文件导出
-     * @Date 19:48 2020/1/1
-     * @Param [file]
-     * @return RespBean
-     **/
+    // 文件导出
 
     @PostMapping("/import")
     public RespBean importData(MultipartFile file) throws IOException {

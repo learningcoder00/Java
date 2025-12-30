@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @Description : 职称
-
- * @Date: 2019/12/26 13:14
- */
+// 职称
 @RestController
 @RequestMapping("/system/basic/joblevel")
 public class JobLevelController {

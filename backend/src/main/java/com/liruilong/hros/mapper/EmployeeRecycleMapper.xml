@@ -79,14 +79,10 @@
                                       contractTerm, conversionTime, notWorkDate,
                                       beginContract, endContract, workAge)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
-      #{birthday,jdbcType=DATE}, #{idcard,jdbcType=CHAR}, #{wedlock,jdbcType=CHAR}, #{nationid,jdbcType=INTEGER}, 
       #{nativeplace,jdbcType=VARCHAR}, #{politicid,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, 
       #{joblevelid,jdbcType=INTEGER}, #{posid,jdbcType=INTEGER}, #{engageform,jdbcType=VARCHAR}, 
       #{tiptopdegree,jdbcType=CHAR}, #{specialty,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
-      #{begindate,jdbcType=DATE}, #{workstate,jdbcType=CHAR}, #{workid,jdbcType=CHAR}, 
-      #{contractterm,jdbcType=DOUBLE}, #{conversiontime,jdbcType=DATE}, #{notworkdate,jdbcType=DATE}, 
-      #{begincontract,jdbcType=DATE}, #{endcontract,jdbcType=DATE}, #{workage,jdbcType=INTEGER}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.liruilong.hros.model.Employee">
@@ -188,7 +184,6 @@
         #{gender,jdbcType=CHAR},
       </if>
       <if test="birthday != null" >
-        #{birthday,jdbcType=DATE},
       </if>
       <if test="idcard != null" >
         #{idcard,jdbcType=CHAR},
@@ -236,7 +231,6 @@
         #{school,jdbcType=VARCHAR},
       </if>
       <if test="begindate != null" >
-        #{begindate,jdbcType=DATE},
       </if>
       <if test="workstate != null" >
         #{workstate,jdbcType=CHAR},
@@ -248,16 +242,12 @@
         #{contractterm,jdbcType=DOUBLE},
       </if>
       <if test="conversiontime != null" >
-        #{conversiontime,jdbcType=DATE},
       </if>
       <if test="notworkdate != null" >
-        #{notworkdate,jdbcType=DATE},
       </if>
       <if test="begincontract != null" >
-        #{begincontract,jdbcType=DATE},
       </if>
       <if test="endcontract != null" >
-        #{endcontract,jdbcType=DATE},
       </if>
       <if test="workage != null" >
         #{workage,jdbcType=INTEGER},

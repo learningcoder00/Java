@@ -2,11 +2,7 @@ package com.liruilong.hros.model;
 
 import java.util.List;
 
-/**
- * @Description : 分页
-
- * @Date: 2019/12/31 11:20
- */
+// 分页
 public class RespPageBean {
 
     /*总记录树*/

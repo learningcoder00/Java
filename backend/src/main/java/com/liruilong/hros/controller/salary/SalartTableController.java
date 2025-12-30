@@ -17,11 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description :
 
- * @Date: 2020/1/15 9:48
- */
 @RestController
 @RequestMapping("/salary/table")
 public class SalartTableController {

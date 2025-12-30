@@ -140,7 +140,6 @@ export default {
         type: 'warning'
       }).then(() => {
         // console.log(data.day)
-        // this.wordDate.date = data.day;
         // this.postRequest("/system/hr/wordDate", this.wordDate).then(resp => {
         //   if (resp) {
         //     this.init();

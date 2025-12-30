@@ -7,11 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @Description :
 
- * @Date: 2019/12/28 16:52
- */
 
 @Service
 public class RwardsAndPunishmentsService {

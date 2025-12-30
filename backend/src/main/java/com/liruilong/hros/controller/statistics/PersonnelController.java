@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * @Description :
 
- * @Date: 2020/1/5 15:54
- */
 @RestController
 @RequestMapping("/statistics/personnel")
 public class PersonnelController {

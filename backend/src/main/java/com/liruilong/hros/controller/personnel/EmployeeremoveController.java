@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description :
 
- * @Date: 2020/1/14 9:16
- */
 @RestController
 @RequestMapping("/personnel/remove")
 public class EmployeeremoveController {

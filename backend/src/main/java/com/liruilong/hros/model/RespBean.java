@@ -1,10 +1,6 @@
 package com.liruilong.hros.model;
 
-/**
- * @Description :返回信息的实体类
-
- * @Date: 2019/12/19 17:34
- */
+// 返回信息的实体类
 public class RespBean {
     private Integer status;
     private String msg;

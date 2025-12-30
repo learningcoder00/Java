@@ -12,13 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Author liruilong
- * @Description
- * @Date 23:29 2019/12/28
- * @Param
- * @return
- **/
 @Transactional
 @Service
 public class DepartmentService {

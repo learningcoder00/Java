@@ -12,11 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * @Description :
 
- * @Date: 2020/5/1 18:26
- */
 @Component
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
     @Override

@@ -20,11 +20,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * @Description :
-
- * @Date: 2019/12/18 18:59
- */
 @Transactional
 @Service
 public class HrService implements UserDetailsService {
@@ -65,12 +60,7 @@ public class HrService implements UserDetailsService {
         return hr;
     }
 
-    /**
-     * 修改密码
-     * @param password
-     * @param rePassword
-     * @return
-     */
+    // 修改密码
     public boolean modifyPass(String password,String rePassword) {
         Hr hr = getBaseHr();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

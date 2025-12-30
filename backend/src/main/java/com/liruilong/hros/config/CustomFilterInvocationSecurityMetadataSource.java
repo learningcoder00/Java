@@ -17,10 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * @Description : 权限处理,根据请求,分析需要的角色,该类的主要功能就是通过当前的请求地址，获取该地址需要的用户角色
- * @Date: 2019/12/24 12:17
- */
+// 权限处理,根据请求,分析需要的角色,该类的主要功能就是通过当前的请求地址，获取该地址需要的用户角色
 @Component
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     @Autowired
@@ -29,13 +26,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
     AntPathMatcher antPathMatcher = new AntPathMatcher();
     Logger logger = Logger.getLogger("com.liruilong.hros.config.ustomFilterInvocationSecurityMetadataSource");
 
-    /**
-     * @return java.util.Collection<org.springframework.security.access.ConfigAttribute> * 返回值是 Collection<ConfigAttribute>，表示当前请求 URL 所需的角色。
-     * @Author liruilong
-     * @Description 当前请求需要的角色, 该方法的参数是一个 FilterInvocation， 开发者可以从 Filterlnvocation 中提取出当前请求的 URL，
-     * @Date 18:13 2019/12/24
-     * @Param [object]
-     **/
+    // 当前请求需要的角色, 该方法的参数是一个 FilterInvocation， 开发者可以从 Filterlnvocation 中提取出当前请求的 URL，
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         //获取当前请求路径
@@ -65,26 +56,14 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 
     }
 
-    /**
-     * @return java.util.Collection<org.springframework.security.access.ConfigAttribute>
-     * @Author liruilong
-     * @Description 用来返回所有定义好的权限资源， Spring Security 在启动时会校验 相关配置是否正确，如果不需要校验，那么该方法直接返回 null 即可。
-     * @Date 18:06 2020/2/13
-     * @Param []
-     **/
+    // 用来返回所有定义好的权限资源， Spring Security 在启动时会校验 相关配置是否正确，如果不需要校验，那么该方法直接返回 null 即可。
 
     @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
         return null;
     }
 
-    /**
-     * @return boolean
-     * @Author liruilong
-     * @Description 返回类对象是否支持校验。
-     * @Date 18:06 2020/2/13
-     * @Param [clazz]
-     **/
+    // 返回类对象是否支持校验。
 
     @Override
     public boolean supports(Class<?> clazz) {

@@ -9,11 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import java.util.Arrays;
 
 
-/**
- * @Description :
 
- * @Date: 2020/2/17 23:05
- */
 
 public class EmailUtils {
 

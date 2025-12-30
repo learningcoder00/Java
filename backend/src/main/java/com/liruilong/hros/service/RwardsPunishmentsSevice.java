@@ -11,11 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description :
 
- * @Date: 2019/12/28 16:10
- */
 @Transactional
 @Service
 public class RwardsPunishmentsSevice {

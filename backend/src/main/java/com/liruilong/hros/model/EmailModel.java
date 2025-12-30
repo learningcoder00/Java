@@ -1,10 +1,6 @@
 package com.liruilong.hros.model;
 
-/**
- * @Description :
 
- * @Date: 2020/2/18 12:25
- */
 public class EmailModel {
 
     private Employee employee;

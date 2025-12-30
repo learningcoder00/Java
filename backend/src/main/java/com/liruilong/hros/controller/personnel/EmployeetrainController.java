@@ -8,11 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description :
 
- * @Date: 2020/1/12 12:27
- */
 @RestController
 @RequestMapping("/personnel/train")
 public class EmployeetrainController {
@@ -85,13 +81,7 @@ public class EmployeetrainController {
         }
     }
 
-    /**
-     * @return RespBean
-     * @Author liruilong
-     * @Description 删除
-     * @Date 22:35 2020/1/13
-     * @Param [eid, id]
-     **/
+    // 删除
 
     @DeleteMapping("/{eid}/{id}")
     public RespBean deleteEmployeetrain(@PathVariable Integer eid, @PathVariable Integer id){
@@ -116,13 +106,7 @@ public class EmployeetrainController {
 
     }
 
-    /**
-     * @Author liruilong
-     * @Description 批量处理
-     * @Date 22:35 2020/1/13
-     * @Param [employeetrain, ids, beginDateScope]
-     * @return RespBean
-     **/
+    // 批量处理
 
     @GetMapping("/addt")
     public RespBean addEmploteetByPge(Employeetrain employeetrain, Integer[] ids, Date[] beginDateScope) {

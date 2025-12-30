@@ -8,11 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description : 奖惩处理
-
- * @Date: 2020/1/8 20:25
- */
+// 奖惩处理
 @RestController
 @RequestMapping("/personnel/ec")
 public class EmployeeecController {

@@ -12,11 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Description : 菜单处理
-
- * @Date: 2019/12/21 13:17
- */
+// 菜单处理
 @Transactional
 @Service
 public class MenuService {
@@ -29,61 +25,31 @@ public class MenuService {
     @Autowired
     OplogService oplogService;
 
-    /**
-     * @return java.util.List<Menu>
-     * @Author liruilong
-     * @Description 根据角色id获取权限菜单
-     * @Date 22:20 2019/12/22
-     * @Param []
-     **/
+    // 根据角色id获取权限菜单
     public List<Menu> getMenusById() {
         return menuMapper.getMenusByHrId(Hruitls.getCurrent().getId());
     }
 
-    /**
-     * @return java.util.List<Menu>
-     * @Author liruilong
-     * @Description 获取所有权限菜单, springSecurity鑒權處理
-     * @Date 17:48 2019/12/24
-     * @Param []
-     **/
+    // 获取所有权限菜单
     // @Cacheable
     public List<Menu> getAllMenusWithRole() {
         return menuMapper.getAllMenusWithRole();
     }
 
-    /**
-     * @return java.util.List<Menu>
-     * @Author liruilong
-     * @Description 菜单数据初始化，系統設置裏的系統菜單處理。
-     * @Date 21:13 2019/12/26
-     * @Param []
-     **/
+    // 菜单数据初始化，系統設置裏的系統菜單處理。
 
     public List<Menu> getAllMenus() {
         return menuMapper.getAllMenus();
     }
 
-    /**
-     * @return java.util.List<java.lang.Integer>
-     * @Author liruilong
-     * @Description 获取当前角色权限
-     * @Date 20:42 2019/12/26
-     * @Param [rid]
-     **/
+    // 获取当前角色权限
     public List<Integer> getMidsByRid(Integer rid) {
 
         return menuRoleMapper.getMidsByRid(rid);
 
     }
 
-    /**
-     * @return boolean
-     * @Author liruilong
-     * @Description 更新信息
-     * @Date 21:12 2019/12/26
-     * @Param [rid, mids]
-     **/
+    // 更新信息
 
     @Transactional
     public boolean updateMenuRole(Integer rid, Integer[] mids) {

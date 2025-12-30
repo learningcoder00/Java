@@ -70,7 +70,6 @@
         #{eid,jdbcType=INTEGER},
       </if>
       <if test="appdate != null" >
-        #{appdate,jdbcType=DATE},
       </if>
       <if test="appresult != null" >
         #{appresult,jdbcType=VARCHAR},
@@ -107,7 +106,6 @@
         #{id,jdbcType=INTEGER},
 
       <if test="app.appdate != null">
-        #{app.appdate,jdbcType=DATE},
       </if>
       <if test="app.appresult != null">
         #{app.appresult,jdbcType=VARCHAR},

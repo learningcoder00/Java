@@ -18,10 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * @Description : 综合信息统计控制器
- * @Date: 2020/1/21 13:28
- */
+// 综合信息统计控制器
 @RequestMapping("/statistics/all")
 @RestController
 public class AllController {
@@ -34,10 +31,7 @@ public class AllController {
 
     private static List<Employee> list = new ArrayList<>();
 
-    /**
-     * 获取部门平均薪资数据
-     * @return 部门平均薪资列表
-     */
+    // 获取部门平均薪资数据
     @GetMapping("/getSalaryData")
     public List<SalaryData> getSalaryData() {
         List<Employee> employeeAll = list;
@@ -76,10 +70,7 @@ public class AllController {
         return result;
     }
 
-    /**
-     * 获取所有员工列表（带薪资信息）
-     * @return 员工列表
-     */
+    // 获取所有员工列表（带薪资信息）
     private ArrayList<Employee> getEmpList() {
         int pageNum = 1;
         int pageSize = 100;
@@ -96,9 +87,7 @@ public class AllController {
         return arrayList;
     }
 
-    /**
-     * 薪资数据内部类
-     */
+    // 薪资数据内部类
     public static class SalaryData {
         private String 部门名称;
         private String 平均薪资;

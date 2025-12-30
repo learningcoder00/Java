@@ -4195,14 +4195,11 @@ if (typeof Object.create === 'function') {
         getClass = objectProto.toString,
         isProperty, forEach, undef;
 
-    // Test the `Date#getUTC*` methods. Based on work by @Yaffle.
     var isExtended = new Date(-3509827334573292);
     try {
-      // The `getUTCFullYear`, `Month`, and `Date` methods return nonsensical
       // results for certain dates in Opera >= 10.53.
       isExtended = isExtended.getUTCFullYear() == -109252 && isExtended.getUTCMonth() === 0 && isExtended.getUTCDate() === 1 &&
         // Safari < 2.0.2 stores the internal millisecond time value correctly,
-        // but clips the values returned by the date methods to the range of
         // signed 32-bit integers ([-2 ** 31, 2 ** 31 - 1]).
         isExtended.getUTCHours() == 10 && isExtended.getUTCMinutes() == 37 && isExtended.getUTCSeconds() == 6 && isExtended.getUTCMilliseconds() == 708;
     } catch (exception) {}
@@ -4350,7 +4347,6 @@ if (typeof Object.create === 'function') {
       // Detect incomplete support for accessing string characters by index.
       var charIndexBuggy = has("bug-string-char-index");
 
-      // Define additional utility methods if the `Date` methods are buggy.
       if (!isExtended) {
         var floor = Math.floor;
         // A mapping between the months of the year and the number of days between
@@ -4539,13 +4535,9 @@ if (typeof Object.create === 'function') {
             className = getClass.call(value);
             if (className == dateClass && !isProperty.call(value, "toJSON")) {
               if (value > -1 / 0 && value < 1 / 0) {
-                // Dates are serialized according to the `Date#toJSON` method
                 // specified in ES 5.1 section 15.9.5.44. See section 15.9.1.15
-                // for the ISO 8601 date time string format.
                 if (getDay) {
-                  // Manually compute the year, month, date, hours, minutes,
                   // seconds, and milliseconds if the `getUTC*` methods are
-                  // buggy. Adapted from @Yaffle's `date-shim` project.
                   date = floor(value / 864e5);
                   for (year = floor(date / 365.2425) + 1970 - 1; getDay(year + 1, 0) <= date; year++);
                   for (month = floor((date - getDay(year, 0)) / 30.42); getDay(year, month + 1) <= date; month++);
@@ -4583,7 +4575,6 @@ if (typeof Object.create === 'function') {
               }
             } else if (typeof value.toJSON == "function" && ((className != numberClass && className != stringClass && className != arrayClass) || isProperty.call(value, "toJSON"))) {
               // Prototype <= 1.6.1 adds non-standard `toJSON` methods to the
-              // `Number`, `String`, `Date`, and `Array` prototypes. JSON 3
               // ignores all `toJSON` methods on these objects unless they are
               // defined directly on an instance.
               value = value.toJSON(property);

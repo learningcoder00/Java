@@ -6,11 +6,7 @@ import com.liruilong.hros.service.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @Description :
 
- * @Date: 2020/1/13 17:22
- */
 @Service
 public class AppraiseService {
 

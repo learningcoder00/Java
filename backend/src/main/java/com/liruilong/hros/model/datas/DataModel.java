@@ -1,10 +1,6 @@
 package com.liruilong.hros.model.datas;
 
-/**
- * @Description : 数据模型
-
- * @Date: 2020/1/5 15:46
- */
+// 数据模型
 
 public class DataModel {
     private  String name;

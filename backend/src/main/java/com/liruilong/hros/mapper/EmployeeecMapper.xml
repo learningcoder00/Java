@@ -91,7 +91,6 @@
                 #{employeeec.eid,jdbcType=INTEGER},
             </if>
             <if test="employeeec.ecdate != null">
-                #{employeeec.ecdate,jdbcType=DATE},
             </if>
             <if test="employeeec.ecreason != null">
                 #{employeeec.ecreason,jdbcType=VARCHAR},
@@ -140,7 +139,6 @@
                 #{eid,jdbcType=INTEGER},
             </if>
             <if test="ecdate != null">
-                #{ecdate,jdbcType=DATE},
             </if>
             <if test="ecreason != null">
                 #{ecreason,jdbcType=VARCHAR},

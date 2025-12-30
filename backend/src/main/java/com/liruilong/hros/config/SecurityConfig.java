@@ -21,11 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.PrintWriter;
 
-/**
- * @Description :
 
- * @Date: 2019/12/18 19:11
- */
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -49,13 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(hrService);
     }
 
-    /**
-     * @return void
-     * @Author liruilong
-     * @Description 放行的请求路径
-     * @Date 19:25 2020/2/7
-     * @Param [web]
-     **/
+    // 放行的请求路径
 
     @Override
     public void configure(WebSecurity web) throws Exception {

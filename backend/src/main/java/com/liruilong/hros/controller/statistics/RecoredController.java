@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-/**
- * @Description : 人事记录统计
-
- * @Date: 2020/1/6 16:11
- */
+// 人事记录统计
 @RestController
 @RequestMapping("/statistics/recored")
 public class RecoredController {
@@ -24,52 +20,28 @@ public class RecoredController {
     DataModelTService dataModelTService;
 
 
-    /**
-     * @return java.util.List<DataModelT>
-     * @Author liruilong
-     * @Description 部门入职统计，离职统计 离职率
-     * @Date 10:58 2020/1/7
-     * @Param []
-     **/
+    // 部门入职统计，离职统计 离职率
     @Scheduled(cron = "0 0 3 * * ?")
     @GetMapping("/department")
       public List<DataModelT> dataViewDepartment(){
           return   dataModelTService.dataViewDepartment();
       }
 
-    /**
-     * @return java.util.List<DataModelT>
-     * @Author liruilong
-     * @Description 职位入职统计，离职统计 离职工龄 离职率
-     * @Date 16:33 2020/1/7
-     * @Param []
-     **/
+    // 职位入职统计，离职统计 离职工龄 离职率
      @Scheduled(cron = "0 0 3 * * ?")
       @GetMapping("/workAge")
     public List<DataModelT> dataViewWorkAge(){
         return dataModelTService.dataViewWorkAge();
       }
 
-    /**
-     * @return java.util.List<DataModelT>
-     * @Author liruilong
-     * @Description 职称入职统计，离职统计 离职工龄 离职率
-     * @Date 16:51 2020/1/7
-     * @Param []
-     **/
+    // 职称入职统计，离职统计 离职工龄 离职率
     @GetMapping("/JobLevel")
     @Scheduled(cron = "0 0 3 * * ?")
     public List<DataModelT> DataViewJobLevelT(){
         return dataModelTService.dataViewJobLevelT();
     }
 
-    /**
-     * @Author liruilong
-     * @Description
-     * @Date 16:54 2020/1/7
-     * @Param []
-     * @return java.util.List<DataModelT>
-     **/
+    
 
 
     @GetMapping("/Department")

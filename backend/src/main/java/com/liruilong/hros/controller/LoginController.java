@@ -13,11 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-/**
- * @Description :
 
- * @Date: 2019/12/19 19:58
- */
 @RestController
 public class LoginController {
 
@@ -29,13 +25,7 @@ public class LoginController {
     }
     @GetMapping(value = "/auth/code")
     public Map<String, Object> getCode(HttpServletRequest request){
-        /**
-         * 说明：
-         * easy-captcha 的 ArithmeticCaptcha 在较新的 JDK(>=15) 上可能拿不到 JavaScript ScriptEngine（Nashorn 已移除），
-         * 进而在 captcha.text() 处抛 NPE。为了兼容你的本机 JDK，这里做降级：
-         * - 能拿到 ScriptEngine：使用算术验证码
-         * - 拿不到 ScriptEngine：使用普通字符验证码（SpecCaptcha）
-         */
+        // 说明：
         String result;
         String imgBase64;
 

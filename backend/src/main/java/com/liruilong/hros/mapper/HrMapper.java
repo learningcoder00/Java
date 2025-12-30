@@ -24,25 +24,13 @@ public interface HrMapper {
 
     int updateWorkDate(Hr record);
 
-    /**
-     * @return Hr
-     * @Author liruilong
-     * @Description 登录
-     * @Date 19:06 2019/12/18
-     * @Param [username]
-     **/
+    // 登录
 
     Hr loadUserByUsername(String username);
 
     Hr loadUserByEmployeeId(Integer employeeId);
 
-    /**
-     * @return java.util.List<Role>
-     * @Author liruilong
-     * @Description 获取当前用户的所用角色
-     * @Date 23:23 2019/12/24
-     * @Param [id]
-     **/
+    // 获取当前用户的所用角色
 
     List<Role> getHrRolesById(Integer id);
 

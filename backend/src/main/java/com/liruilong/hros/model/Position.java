@@ -6,13 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-/**
- * @Author liruilong
- * @Description 职位
- * @Date 12:11 2019/12/25
- * @Param
- * @return
- **/
+// 职位
 
 public class Position implements Serializable {
     private Integer id;

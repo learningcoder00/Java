@@ -9,13 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @Author liruilong
- * @Description 职位
- * @Date 15:01 2019/12/25
- * @Param
- * @return
- **/
+// 职位
 
 @RestController
 @RequestMapping("/system/basic/pos")
@@ -23,13 +17,7 @@ public class PositionController {
     @Autowired
     PositionService positionService;
 
-    /**
-     * @Author liruilong
-     * @Description 返回显示信息
-     * @Date 15:29 2019/12/25
-     * @Param []
-     * @return java.util.List<Position>
-     **/
+    // 返回显示信息
 
     @GetMapping("/")
     public List<Position> getAllPositions() {
@@ -41,13 +29,7 @@ public class PositionController {
         return positionService.getRealAllPositions();
     }
 
-    /**
-     * @return RespBean
-     * @Author liruilong
-     * @Description 添加
-     * @Date 15:29 2019/12/25
-     * @Param [position]
-     **/
+    // 添加
 
     @PostMapping("/")
     public RespBean addPosition(@RequestBody Position position) {
@@ -57,13 +39,7 @@ public class PositionController {
         return RespBean.error("添加失败!");
     }
 
-    /**
-     * @Author liruilong
-     * @Description 更新
-     * @Date 15:29 2019/12/25
-     * @Param [position]
-     * @return RespBean
-     **/
+    // 更新
     @PutMapping("/")
     public RespBean updatePositions(@RequestBody Position position) {
         if (positionService.updatePositions(position) == 1) {
@@ -77,13 +53,7 @@ public class PositionController {
         return  positionService.serchPositions(position);
 
     }
-    /**
-     * @Author liruilong
-     * @Description 删除
-     * @Date 15:29 2019/12/25
-     * @Param [id]
-     * @return RespBean
-     **/
+    // 删除
 
     @DeleteMapping("/{id}")
     public RespBean deletePositionById(@PathVariable Integer id) {
@@ -93,13 +63,7 @@ public class PositionController {
         return RespBean.error("删除失败!");
     }
 
-    /**
-     * @Author liruilong
-     * @Description 批量删除
-     * @Date 15:30 2019/12/25
-     * @Param [ids]
-     * @return RespBean
-     **/
+    // 批量删除
 
     @DeleteMapping("/")
     public RespBean deletePositionsByIds(Integer[] ids) {

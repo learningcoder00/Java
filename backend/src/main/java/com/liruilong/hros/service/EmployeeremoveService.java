@@ -7,11 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * @Description :
 
- * @Date: 2020/1/14 16:40
- */
 @Service
 @Transactional
 public class EmployeeremoveService {

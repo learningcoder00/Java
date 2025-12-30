@@ -76,7 +76,6 @@
         #{eid,jdbcType=INTEGER},
       </if>
       <if test="trainstartdate != null" >
-        #{trainstartdate,jdbcType=DATE},
       </if>
       <if test="trainfinishdate != null" >
         #{trainfinishdate,jdbcType=TIMESTAMP},

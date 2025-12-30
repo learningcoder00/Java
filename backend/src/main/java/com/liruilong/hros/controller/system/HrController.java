@@ -13,11 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @Description :
 
- * @Date: 2019/12/29 20:14
- */
 @RequestMapping("/system/hr")
 @RestController
 public class HrController {

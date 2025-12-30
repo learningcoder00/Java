@@ -15,10 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * @Description :
- * @Date: 2019/12/26 13:17
- */
+
 @Transactional
 @Service
 public class JobLevelService implements Serializable {

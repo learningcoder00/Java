@@ -9,13 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @Author liruilong
- * @Description
- * @Date 23:31 2019/12/28
- * @Param
- * @return
- **/
+
 
 @RestController
 @RequestMapping("/system/basic/department")

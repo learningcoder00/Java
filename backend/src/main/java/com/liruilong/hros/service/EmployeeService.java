@@ -18,11 +18,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * @Description :
 
- * @Date: 2019/12/31 11:27
- */
 @Service
 @Transactional
 public class EmployeeService {
@@ -65,13 +61,7 @@ public class EmployeeService {
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
     DecimalFormat decimalFormat = new DecimalFormat("##.00");
 
-    /**
-     * @return RespPageBean
-     * @Author liruilong
-     * @Description page 为显示的页数，size为每页显示的页数
-     * @Date 11:34 2019/12/31
-     * @Param [page, size]
-     **/
+    // page 为显示的页数，size为每页显示的页数
 
     public RespPageBean getEmploteeByPge(Integer page, Integer size, Employee employee, Date[] beginDateScope) {
 

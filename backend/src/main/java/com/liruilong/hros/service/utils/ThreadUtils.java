@@ -7,11 +7,7 @@ import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @Description :线程池工具类
-
- * @Date: 2020/2/19 12:29
- */
+// 线程池工具类
 public class ThreadUtils {
     //邮件发送线程池
     private static ThreadPoolExecutor threadPoolExecutor =
@@ -24,24 +20,12 @@ public class ThreadUtils {
         return new Thread(() -> EmailUtils.sendGEmail(emailModel));
     }
 
-    /**
-     * @return void
-     * @Author liruilong
-     * @Description 构造一个有缓冲功能的线程池
-     * @Date 18:14 2020/2/19
-     * @Param [thread]
-     **/
+    // 构造一个有缓冲功能的线程池
     public static void getCachedThreadPool(Thread thread) {
        Executors.newCachedThreadPool().execute(thread);
     }
 
-    /**
-     * @return void
-     * @Author liruilong
-     * @Description 构造一个固定线程数目的线程池
-     * @Date 18:21 2020/2/19
-     * @Param [thread]
-     **/
+    // 构造一个固定线程数目的线程池
     public static void getFixedThreadPool(Thread thread,Integer size){
         Executors.newFixedThreadPool(size).execute(thread);
     }

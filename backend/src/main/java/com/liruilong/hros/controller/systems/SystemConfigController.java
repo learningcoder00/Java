@@ -9,24 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * @Description :  菜单加载
-
- * @Date: 2019/12/21 13:14
- */
+// 菜单加载
 @RestController
 @RequestMapping("/system/config")
 public class SystemConfigController {
     @Autowired
     MenuService menuService;
 
-    /**
-     * @return java.util.List<Menu>
-     * @Author liruilong
-     * @Description 系統菜單加載
-     * @Date 16:13 2020/2/14
-     * @Param []
-     **/
+    // 系統菜單加載
 
     @GetMapping("/menu")
     public List<Menu> getMenusByHrId(){

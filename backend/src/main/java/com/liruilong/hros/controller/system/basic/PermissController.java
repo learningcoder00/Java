@@ -11,13 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @Author liruilong
- * @Description
- * @Date 17:21 2019/12/26
- * @Param
- * @return
- **/
+
 
 @RestController
 @RequestMapping("/system/basic/permiss")
@@ -32,13 +26,7 @@ public class PermissController {
         return roleService.getAllRoles();
     }
 
-    /**
-     * @return java.util.List<Menu>
-     * @Author liruilong
-     * @Description 系統設置裏的菜單處理
-     * @Date 16:17 2020/2/14
-     * @Param []
-     **/
+    // 系統設置裏的菜單處理
 
     @GetMapping("/menus")
     public List<Menu> getAllMenus() {

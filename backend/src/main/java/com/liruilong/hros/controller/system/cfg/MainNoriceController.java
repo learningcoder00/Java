@@ -7,11 +7,7 @@ import com.liruilong.hros.service.MainNoriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @Description :
 
- * @Date: 2020/1/3 10:01
- */
 @RequestMapping("/system/cfg")
 @RestController
 public class MainNoriceController {

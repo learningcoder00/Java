@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @Description : 奖惩
-
- * @Date: 2019/12/28 16:06
- */
+// 奖惩
 
 @RestController
 @RequestMapping("/system/basic/rp")

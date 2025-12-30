@@ -14,13 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Author liruilong
- * @Description
- * @Date 17:37 2019/12/26
- * @Param
- * @return
- **/
 @Transactional
 @Service
 public class RoleService {
@@ -35,26 +28,12 @@ public class RoleService {
     MenuRoleMapper menuRoleMapper;
 
 
-    /**
-     * @return java.util.List<Role>
-     * @Author liruilong
-     * @Description 数据初始化
-     * @Date 20:42 2019/12/26
-     * @Param []
-     **/
-
+    // 数据初始化
     public List<Role> getAllRoles() {
         return roleMapper.getAllRoles();
     }
 
-    /**
-     * @Author liruilong
-     * @Description 添加角色权限
-     * @Date 20:42 2019/12/26
-     * @Param [role]
-     * @return java.lang.Integer
-     **/
-
+    // 添加角色权限
     public Integer addRole(Role role) {
         if (!role.getName().startsWith("ROLE_")) {
             role.setName("ROLE_" + role.getName());
@@ -63,14 +42,7 @@ public class RoleService {
         return roleMapper.insert(role);
     }
 
-    /**
-     * @Author liruilong
-     * @Description 删除角色
-     * @Date 20:43 2019/12/26
-     * @Param [rid]
-     * @return java.lang.Integer
-     **/
-
+    // 删除角色
     public Integer deleteRoleById(Integer rid) {
         oplogService.addOpLog(new OpLog((byte) 1, new Date(), "删除角色: id = " + rid, Hruitls.getCurrent().getName()));
         menuRoleMapper.deleteByRid(rid);

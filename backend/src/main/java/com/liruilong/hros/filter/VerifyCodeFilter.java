@@ -17,11 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-/**
- * @Description :
 
- * @Date: 2020/2/7 19:39
- */
 @Component
 public class VerifyCodeFilter extends OncePerRequestFilter {
     @Autowired
